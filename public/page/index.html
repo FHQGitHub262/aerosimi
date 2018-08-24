@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AeroSimulate</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <script src="./js/babylon/babylonjs.min.js"></script>
+    <script src="./js/babylon/babylonjs.loaders.min.js"></script>
+</head>
+
+<body>
+    <!-- hello,world! -->
+    <canvas id="renderCanvas" touch-action="none"></canvas>
+
+</body>
+
+<script>
+    var canvas = document.getElementById("renderCanvas"); // Get the canvas element 
+
+    var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+
+    var delayCreateScene = function () {
+        var scene = new BABYLON.Scene(engine);
+
+        // // Create a default skybox with an environment.
+        // var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("textures/environment.dds", scene);
+        // var currentSkybox = scene.createDefaultSkybox(hdrTexture, true);
+
+        BABYLON.SceneLoader.Append("/mesh/f117/", "f117.obj", engine, function (newScene) {
+            scene.createDefaultCameraOrLight(true, true, true);
+            // The default camera looks at the back of the asset.
+            // Rotate the camera by 180 degrees to the front of the asset.
+            scene.activeCamera.alpha += Math.PI;
+        });
+
+        return scene;
+    };
+    window.onload = delayCreateScene()
+</script>
+
+</html>
