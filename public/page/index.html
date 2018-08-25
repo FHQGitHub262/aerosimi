@@ -1,44 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AeroSimulate</title>
-    <link rel="stylesheet" href="./css/main.css">
-    <script src="./js/babylon/babylonjs.min.js"></script>
-    <script src="./js/babylon/babylonjs.loaders.min.js"></script>
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <script src="./js/babylon/water.js"></script>
+    <script src="./js/index/beginScene.js"></script>
+
+    <style>
+        html, body {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #renderCanvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- hello,world! -->
-    <canvas id="renderCanvas" touch-action="none"></canvas>
-
+    <canvas id="renderCanvas"></canvas>
 </body>
 
 <script>
-    var canvas = document.getElementById("renderCanvas"); // Get the canvas element 
+var canvas = document.getElementById("renderCanvas");
 
-    var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+var firstScene = function () {
+    var scene = new BABYLON.Scene(engine);
 
-    var delayCreateScene = function () {
-        var scene = new BABYLON.Scene(engine);
+    var sky=setSky(scene)
+    var light=setLight(scene)
+    var camera=setCamera(scene)
+    var ground=createGround(scene)
+    var water=createWater(scene,sky,ground)
+    // var panel=createPanel(scene)
 
-        // // Create a default skybox with an environment.
-        // var hdrTexture = BABYLON.CubeTexture.CreateFromPrefilteredData("textures/environment.dds", scene);
-        // var currentSkybox = scene.createDefaultSkybox(hdrTexture, true);
+    scene.onPointerDown = function () {
+        scene.onPointerDown = undefined
+        camera.attachControl(canvas, true);
+    }
 
-        BABYLON.SceneLoader.Append("/mesh/f117/", "f117.obj", engine, function (newScene) {
-            scene.createDefaultCameraOrLight(true, true, true);
-            // The default camera looks at the back of the asset.
-            // Rotate the camera by 180 degrees to the front of the asset.
-            scene.activeCamera.alpha += Math.PI;
-        });
+    var vrHelper = scene.createDefaultVRExperience();
+    vrHelper.enableTeleportation({floorMeshes: [ground]});
+    vrHelper.displayGaze=true
+    vrHelper.displayLaserPointer=true
+    vrHelper.enableInteractions();
+    return scene;
+};
 
-        return scene;
-    };
-    window.onload = delayCreateScene()
+var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+var scene = beginScene();
+
+
+engine.runRenderLoop(function () {
+    if (scene) {
+        scene.render();
+    }
+});
+
+// Resize
+window.addEventListener("resize", function () {
+    engine.resize();
+});
 </script>
 
 </html>
