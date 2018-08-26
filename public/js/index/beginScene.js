@@ -1,68 +1,70 @@
-function addButton(scene){
+function addButton(scene) {
     var anchor = new BABYLON.TransformNode("");
 }
 
-function setLight(scene){
+function setLight(scene) {
     var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = 0.7;
     return light
 }
 
 function setSky(scene) {
-    var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:5000.0}, scene);
-	var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-	skyboxMaterial.backFaceCulling = false;
-	skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay/TropicalSunnyDay", scene);
-	skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+    var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {
+        size: 5000.0
+    }, scene);
+    var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+    skyboxMaterial.backFaceCulling = false;
+    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("textures/TropicalSunnyDay/TropicalSunnyDay", scene);
+    skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
     skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-	skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-	skyboxMaterial.disableLighting = true;
-	skybox.material = skyboxMaterial;			
+    skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+    skyboxMaterial.disableLighting = true;
+    skybox.material = skyboxMaterial;
     return skybox
 }
 
-function createGround(scene){
+function createGround(scene) {
     var groundTexture = new BABYLON.Texture("textures/sand.jpg", scene);
-	groundTexture.vScale = groundTexture.uScale = 4.0;
-	
-	var groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
-	groundMaterial.diffuseTexture = groundTexture;
-	
-	var ground = BABYLON.Mesh.CreateGround("ground", 4000, 4000, 5, scene, false);
-	ground.position.y = -10;
-	ground.material = groundMaterial;
+    groundTexture.vScale = groundTexture.uScale = 4.0;
+
+    var groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
+    groundMaterial.diffuseTexture = groundTexture;
+
+    var ground = BABYLON.Mesh.CreateGround("ground", 4000, 4000, 5, scene, false);
+    ground.position.y = -10;
+    ground.material = groundMaterial;
     return ground
 }
 
-function createWater(scene){
+function createWater(scene) {
     var waterMesh = BABYLON.Mesh.CreateGround("waterMesh", 4000, 4000, 10, scene, false);
-	var water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(1024, 1024));
-	water.backFaceCulling = true;
-	water.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
-	water.windForce = 5;
-	water.waveHeight = 0.5;
-	water.bumpHeight = 0.1;
-	water.waveLength = 0.1;
-	water.colorBlendFactor = 0;
+    var water = new BABYLON.WaterMaterial("water", scene, new BABYLON.Vector2(1024, 1024));
+    water.backFaceCulling = true;
+    water.bumpTexture = new BABYLON.Texture("textures/waterbump.png", scene);
+    water.windForce = 5;
+    water.waveHeight = 0.5;
+    water.bumpHeight = 0.1;
+    water.waveLength = 0.1;
+    water.colorBlendFactor = 0;
 
-    for(let i=1;i<arguments.length;i++){
+    for (let i = 1; i < arguments.length; i++) {
         water.addToRenderList(arguments[i])
     }
 
-	waterMesh.material = water;
-    waterMesh.position.y=-10
+    waterMesh.material = water;
+    waterMesh.position.y = -10
     return waterMesh
 }
 
-function setCamera(scene){
+function setCamera(scene) {
     var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 2, BABYLON.Vector3.Zero(), scene);
-	camera.attachControl(canvas, false, false);
+    camera.attachControl(canvas, false, false);
     return camera
 }
 
-function createPanel(){
-    let next=""
-    let columns=[
+function createPanel() {
+    let next = ""
+    let columns = [
         "电磁波特性",
         "飞行器散射",
         "与时间相关",
@@ -71,14 +73,14 @@ function createPanel(){
     // Plane
     var plane = BABYLON.Mesh.CreatePlane("plane", 20);
     plane.position.z = 25;
-    plane.position.y=3
+    plane.position.y = 3
 
     // GUI
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);
 
-    var panel = new BABYLON.GUI.StackPanel();  
+    var panel = new BABYLON.GUI.StackPanel();
     panel.top = "100px";
-    advancedTexture.addControl(panel);    
+    advancedTexture.addControl(panel);
 
     var button1 = BABYLON.GUI.Button.CreateSimpleButton("but1", "开始实验");
     button1.width = 1;
@@ -87,22 +89,22 @@ function createPanel(){
     button1.fontSize = 50;
     button1.background = "orange";
     panel.addControl(button1);
-    button1.onPointerClickObservable.add(()=>{
-        switch(next){
+    button1.onPointerClickObservable.add(() => {
+        switch (next) {
             case columns[0]:
-                scene=firstScene()
+                scene = firstScene()
                 break
             case columns[1]:
-                scene=firstScene()
+                scene = firstScene()
                 break
             case columns[2]:
-                scene=firstScene()
+                scene = firstScene()
                 break
             case columns[3]:
-                scene=firstScene()
+                scene = firstScene()
                 break
             default:
-                textblock.text="请先选中实验再开始"
+                textblock.text = "请先选中实验再开始"
         }
     })
 
@@ -110,46 +112,50 @@ function createPanel(){
     textblock.height = "150px";
     textblock.fontSize = 100;
     textblock.text = "请选择一个实验:";
-    panel.addControl(textblock);   
+    panel.addControl(textblock);
 
-    var addRadio = function(text, parent) {
+    var addRadio = function (text, parent) {
         var button = new BABYLON.GUI.RadioButton();
         button.width = "40px";
         button.height = "40px";
         button.color = "white";
-        button.background = "orange";     
+        button.background = "orange";
 
-        button.onIsCheckedChangedObservable.add(function(state) {
+        button.onIsCheckedChangedObservable.add(function (state) {
             if (state) {
                 textblock.text = "已选中：" + text;
-                next=text
+                next = text
             }
-        }); 
+        });
 
-        var header = BABYLON.GUI.Control.AddHeader(button, text, "400px", { isHorizontal: true, controlFirst: true });
+        var header = BABYLON.GUI.Control.AddHeader(button, text, "400px", {
+            isHorizontal: true,
+            controlFirst: true
+        });
         header.height = "150px";
         header.children[1].fontSize = 60;
-        header.children[1].onPointerDownObservable.add(function() {
+        header.children[1].onPointerDownObservable.add(function () {
             button.isChecked = !button.isChecked;
         });
 
-        parent.addControl(header);    
+        parent.addControl(header);
     }
 
     columns.forEach(element => {
-        addRadio(element,panel)
+        addRadio(element, panel)
     });
+    return panel.mesh
 }
 
 var beginScene = function () {
     var scene = new BABYLON.Scene(engine);
 
-    var sky=setSky(scene)
-    var light=setLight(scene)
-    var camera=setCamera(scene)
-    var ground=createGround(scene)
-    var water=createWater(scene,sky,ground)
-    var panel=createPanel(scene)
+    var sky = setSky(scene)
+    var light = setLight(scene)
+    var camera = setCamera(scene)
+    var ground = createGround(scene)
+    var water = createWater(scene, sky, ground, panel)
+    var panel = createPanel(scene)
 
     scene.onPointerDown = function () {
         scene.onPointerDown = undefined
@@ -157,9 +163,11 @@ var beginScene = function () {
     }
 
     var vrHelper = scene.createDefaultVRExperience();
-    vrHelper.enableTeleportation({floorMeshes: [ground]});
-    vrHelper.displayGaze=true
-    vrHelper.displayLaserPointer=true
+    vrHelper.enableTeleportation({
+        floorMeshes: [ground]
+    });
+    vrHelper.displayGaze = true
+    vrHelper.displayLaserPointer = true
     vrHelper.enableInteractions();
     return scene;
 };
