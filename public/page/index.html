@@ -9,7 +9,7 @@
     <script src="https://preview.babylonjs.com/babylon.js"></script>
     <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
     <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
-    <script src="https://preview.babylonjs.com/loaders/babylonjs.objFileLoader.js"></script>
+    <!-- <script src="https://preview.babylonjs.com/loaders/babylonjs.objFileLoader.js"></script> -->
     <script src="./js/babylon/water.js"></script>
     <script src="./js/index/beginScene.js"></script>
     <script src="./js/index/firstScene.js"></script>
@@ -45,7 +45,7 @@
         stencil: true
     });
     var scene = secondScene();
-
+    BABYLON.SceneLoader.ShowLoadingScreen=true
 
     engine.runRenderLoop(function () {
         if (scene) {
