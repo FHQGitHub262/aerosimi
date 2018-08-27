@@ -11,9 +11,12 @@
     <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
     <!-- <script src="https://preview.babylonjs.com/loaders/babylonjs.objFileLoader.js"></script> -->
     <script src="./js/babylon/water.js"></script>
+    <script src="./js/index/public.js"></script>    
     <script src="./js/index/beginScene.js"></script>
     <script src="./js/index/firstScene.js"></script>
     <script src="./js/index/secondScene.js"></script>
+    <script src="./js/index/thirdScene.js"></script>
+    <script src="./js/index/forthScene.js"></script>
 
     <style>
         html,
@@ -39,12 +42,15 @@
 
 <script>
     var canvas = document.getElementById("renderCanvas");
+    const clientWidth=canvas.clientWidth
+    const clientHeight=canvas.clientHeight
 
     var engine = new BABYLON.Engine(canvas, true, {
         preserveDrawingBuffer: true,
         stencil: true
     });
-    var scene = secondScene();
+    var scene = beginScene();
+
     BABYLON.SceneLoader.ShowLoadingScreen=true
 
     engine.runRenderLoop(function () {
@@ -52,7 +58,7 @@
             scene.render();
         }
     });
-
+    engine.loadingUIBackgroundColor = "Black";
     // Resize
     window.addEventListener("resize", function () {
         engine.resize();

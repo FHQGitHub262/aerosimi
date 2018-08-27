@@ -1,8 +1,5 @@
-var secondScene = function (aeroplane="F117") {
+var forthScene = function (aeroplane="F117") {
     var scene = new BABYLON.Scene(engine);
-
-    type="side"
-    video=""
 
     var sky = setSky(scene)
     var light = setLight(scene)
@@ -11,9 +8,9 @@ var secondScene = function (aeroplane="F117") {
     scene.activeCamera=sideCamera
     var ground = createGround(scene)
     var water = createWater(scene, sky, ground)
-    var two_panel = addTimePanel(scene)
+    var two_panel = addRCSPanel(scene)
     var vrHelper=vr(scene,ground)
-    var tri_panel = addBackButton("表面电场分布（频率）")
+    var tri_panel = addBackButton("RCS测量")
 
     var assetsManager = new BABYLON.AssetsManager(scene);
     assetsManager.onTaskError = function (task) {
@@ -25,15 +22,14 @@ var secondScene = function (aeroplane="F117") {
         });
     };
     if(aeroplane=="F117"){
-        addF117(assetsManager,scene)
+        addF117(assetsManager)
     }else{
-        addA380(assetsManager,scene)
+        addA380(assetsManager)
     }
     return scene;
 };
 
-// -----------------------------------------
-function addTimePanel(scene_t) {
+function addRCSPanel(scene_t) {
     var addRadio = function (text, parent,textblock,callback=function(state){
         if (state) {
             textblock.text = "当前：" + text;
@@ -98,7 +94,18 @@ function addTimePanel(scene_t) {
     button1.background = "orange";
     panel.addControl(button1);
     button1.onPointerClickObservable.add(() => {
-        video=addPicture(type)
+        switch (next) {
+            case columns[0]:
+                text1.text = "433MHz"
+                console.log("type1")
+                break
+            case columns[1]:
+                text1.text = "2GHz"
+                console.log("type2")
+                break
+            default:
+                textblock.text = "请先完成设置"
+        }
     })
 
     columns.forEach(element => {
@@ -106,20 +113,15 @@ function addTimePanel(scene_t) {
             if (state) {
                 if(element=="F117"){
                     scene.dispose()
-                    scene=secondScene("F117")
+                    scene=forthScene("F117")
                 }else{
                     scene.dispose()
-                    scene=secondScene("A380")
+                    scene=forthScene("A380")
                 }
             }
         })
     });
-
-    
-
     // ------------------------------------------------
-
-
     var plane_l = BABYLON.Mesh.CreatePlane("plane_l", 25);
     plane_l.position.x = 300;
     plane_l.position.y = 100
@@ -184,18 +186,12 @@ function addTimePanel(scene_t) {
                     plane_r.position=new BABYLON.Vector3(60,100,-300)
                     plane_r2.position=new BABYLON.Vector3(60,88,-300)
                     plane_l.position=new BABYLON.Vector3(-60,100,-300)
-                    type="front"
                     scene.activeCamera=frontCamera
                 }else{
                     plane_r.position=new BABYLON.Vector3(300,100,60)
                     plane_r2.position=new BABYLON.Vector3(300,88,60)
                     plane_l.position=new BABYLON.Vector3(300,100,-60)
-                    type="side"
                     scene.activeCamera=sideCamera
-                }
-                if(video!=""){
-                    video.dispose()
-                    video=""
                 }
             }
         })
