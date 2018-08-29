@@ -8,14 +8,17 @@ function addRadar(assetsManager,position){
 
         radar.position=position
     }
-    assetsManager.load();
+    // assetsManager.load();
 }
 
 function addA380(assetsManager){
     var meshTask = assetsManager.addMeshTask("a380", "", "./mesh/", "a380.obj");
     meshTask.onSuccess = function (task) {
         let a380=BABYLON.Mesh.MergeMeshes(task.loadedMeshes,true,true)
-        a380.scaling=new BABYLON.Vector3(0.01,0.01,0.01)
+        a380.scaling=new BABYLON.Vector3(0.00175,0.00175,0.00175)
+        a380.position.y+=100
+        a380.position.z=300
+        a380.rotation=new BABYLON.Vector3(0,Math.PI,0)
     }
     assetsManager.load();
 }
@@ -23,9 +26,14 @@ function addA380(assetsManager){
 function addF117(assetsManager){
     var meshTask = assetsManager.addMeshTask("f117", "", "./mesh/f117/", "f117.obj");
     meshTask.onSuccess = function (task) {
-        task.loadedMeshes.forEach((element)=>{
-            element.position.y+=10
-        })
+        let f117=BABYLON.Mesh.MergeMeshes(task.loadedMeshes,true,true)
+        f117.position.y+=100
+        f117.position.z=300
+        let mat=new BABYLON.StandardMaterial()
+        mat.diffuseColor = new BABYLON.Color3(0.28, 0.3, 0.3);
+        f117.scaling=new BABYLON.Vector3(0.2,0.2,0.2)
+        f117.material=mat
+        console.log(scene)
     }
     assetsManager.load();
 }
@@ -101,7 +109,7 @@ function createRadarSphere(scene,frequence,position,rotation){
         setTimeout(()=>{
             clearInterval(scale)
             plane.dispose()
-        },10000)
+        },5000)
     },500*frequence)
 }
 

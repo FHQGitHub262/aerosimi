@@ -25,10 +25,13 @@ var secondScene = function (aeroplane="F117") {
         });
     };
     if(aeroplane=="F117"){
+        // addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
         addF117(assetsManager,scene)
     }else{
+        addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
         addA380(assetsManager,scene)
     }
+
     return scene;
 };
 
@@ -45,9 +48,9 @@ function addTimePanel(scene_t) {
         button.height = "40px";
         button.color = "white";
         button.background = "orange";
-    
+
         button.onIsCheckedChangedObservable.add(callback);
-    
+
         var header = BABYLON.GUI.Control.AddHeader(button, text, "400px", {
             isHorizontal: true,
             controlFirst: true
@@ -57,7 +60,7 @@ function addTimePanel(scene_t) {
         header.children[1].onPointerDownObservable.add(function () {
             button.isChecked = !button.isChecked;
         });
-    
+
         parent.addControl(header);
     }
     wave=""
@@ -115,7 +118,7 @@ function addTimePanel(scene_t) {
         })
     });
 
-    
+
 
     // ------------------------------------------------
 
@@ -142,13 +145,20 @@ function addTimePanel(scene_t) {
             if (state) {
                 textblock_l.text = "当前：" + element;
                 if(element=="433MHz"){
-                    if(wave!="")
-                        wave.dispose()
-                    wave=createRadarWave(scene_t,5000)
+                    if(wave!=""){
+                        clearInterval(wave)
+                        wave=""
+                    }
+                    wave=createRadarSphere(scene,2,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+                        // wave.dispose()
+                    // wave=createRadarWave(scene_t,5000)
                 }else if(element=="2.4GHz"){
-                    if(wave!="")
-                        wave.dispose()
-                    wave=createRadarWave(scene_t,3000)
+                    if(wave!=""){
+                        clearInterval(wave)
+                        wave=""
+                    }
+                    wave=createRadarSphere(scene,0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+                    // wave=createRadarWave(scene_t,3000)
                 }
             }
         })
@@ -173,8 +183,8 @@ function addTimePanel(scene_t) {
     textblock_r2.height = "150px";
     textblock_r2.fontSize = 100;
     textblock_r2.text = "选择角度";
-    panel_r2.addControl(textblock_r2);    
-    
+    panel_r2.addControl(textblock_r2);
+
     columns_l.forEach(element => {
         addRadio(element, panel_r2,textblock_r2,(state)=>{
             if (state) {

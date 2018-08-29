@@ -23,10 +23,13 @@ var secondScene = function (aeroplane="F117") {
         });
     };
     if(aeroplane=="F117"){
+        addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
+        // assetsManager.load()
         addF117(assetsManager,scene)
     }else{
         addA380(assetsManager,scene)
     }
+
     return scene;
 };
 
@@ -43,9 +46,9 @@ function addTimePanel(scene_t) {
         button.height = "40px";
         button.color = "white";
         button.background = "orange";
-    
+
         button.onIsCheckedChangedObservable.add(callback);
-    
+
         var header = BABYLON.GUI.Control.AddHeader(button, text, "400px", {
             isHorizontal: true,
             controlFirst: true
@@ -55,7 +58,7 @@ function addTimePanel(scene_t) {
         header.children[1].onPointerDownObservable.add(function () {
             button.isChecked = !button.isChecked;
         });
-    
+
         parent.addControl(header);
     }
     wave=""
@@ -113,7 +116,7 @@ function addTimePanel(scene_t) {
         })
     });
 
-    
+
 
     // ------------------------------------------------
 
@@ -140,13 +143,17 @@ function addTimePanel(scene_t) {
             if (state) {
                 textblock_l.text = "当前：" + element;
                 if(element=="433MHz"){
-                    if(wave!="")
-                        wave.dispose()
-                    wave=createRadarWave(scene_t,5000)
+                    if(wave!=""){
+                        clearInterval(wave)
+                        wave=""
+                    }
+                    wave=createRadarSphere(scene,2,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
                 }else if(element=="2.4GHz"){
-                    if(wave!="")
-                        wave.dispose()
-                    wave=createRadarWave(scene_t,3000)
+                    if(wave!=""){
+                        clearInterval(wave)
+                        wave=""
+                    }
+                    wave=createRadarSphere(scene,0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
                 }
             }
         })
@@ -171,25 +178,28 @@ function addTimePanel(scene_t) {
     textblock_r2.height = "150px";
     textblock_r2.fontSize = 100;
     textblock_r2.text = "选择角度";
-    panel_r2.addControl(textblock_r2);    
-    
+    panel_r2.addControl(textblock_r2);
+
     columns_l.forEach(element => {
         addRadio(element, panel_r2,textblock_r2,(state)=>{
             if (state) {
                 console.log(state)
                 textblock_r2.text = "当前：" + element;
                 if(element=="正视图"){
-                    plane_r.position=new BABYLON.Vector3(60,100,-300)
-                    plane_r2.position=new BABYLON.Vector3(60,88,-300)
-                    plane_l.position=new BABYLON.Vector3(-60,100,-300)
                     type="front"
-                    scene.activeCamera=frontCamera
+                    scene.meshes.forEach((element)=>{
+                        if(element.id=="t02_merged"||element.id=="Archmod73_0407_merged"){
+                            element.position=new BABYLON.Vector3(-element.position.z,element.position.y,element.position.x)
+                            element.rotation.y-=0.5*Math.PI
+                        }
+                    })
                 }else{
-                    plane_r.position=new BABYLON.Vector3(300,100,60)
-                    plane_r2.position=new BABYLON.Vector3(300,88,60)
-                    plane_l.position=new BABYLON.Vector3(300,100,-60)
-                    type="side"
-                    scene.activeCamera=sideCamera
+                    scene.meshes.forEach((element)=>{
+                        if(element.id=="t02_merged"||element.id=="Archmod73_0407_merged"){
+                            element.position=new BABYLON.Vector3(element.position.z,element.position.y,-element.position.x)
+                            element.rotation.y+=0.5*Math.PI
+                        }
+                    })
                 }
                 if(video!=""){
                     video.dispose()
