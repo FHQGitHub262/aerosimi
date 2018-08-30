@@ -8,7 +8,6 @@ function addRadar(assetsManager,position){
 
         radar.position=position
     }
-    // assetsManager.load();
 }
 
 function addA380(assetsManager){
@@ -20,7 +19,6 @@ function addA380(assetsManager){
         a380.position.z=300
         a380.rotation=new BABYLON.Vector3(0,Math.PI,0)
     }
-    assetsManager.load();
 }
 
 function addF117(assetsManager){
@@ -33,9 +31,12 @@ function addF117(assetsManager){
         mat.diffuseColor = new BABYLON.Color3(0.28, 0.3, 0.3);
         f117.scaling=new BABYLON.Vector3(0.2,0.2,0.2)
         f117.material=mat
+
+        f111.fly=function(){
+            console.log(this)
+        }
         console.log(scene)
     }
-    assetsManager.load();
 }
 
 function addBackButton(title){
@@ -77,7 +78,7 @@ function addCloseButton(screen){
     button.width = "74px";
     button.height = "50px";
     button.color = "white";
-    button.background = "white";
+    button.background = "gray";
     // button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
     button.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 
@@ -128,21 +129,22 @@ function frameGround(scene){
 
 function addVideo(type="side",url="./video/video_1.mp4"){
     var screen = BABYLON.MeshBuilder.CreatePlane("screen",{height:90/3, width: 160/3},scene)
-    screen.billboardMode=2
+    screen.billboardMode=7
+    screen.scaling=new BABYLON.Vector3(2,2,2)
     if(type=="front"){
         screen.position.y=80
         screen.position.x=0
         screen.position.z=-300
-        screen.rotation.x=0.5
+        // screen.rotation.x=0.5
     }else if(type=="side"){
         screen.position.y=80
         screen.position.x=300
         screen.position.z=0
-        screen.rotation.x=0.5    
+        // screen.rotation.x=0.5    
     }
     var mat = new BABYLON.StandardMaterial("mat", scene);
 
-	var videoTexture = new BABYLON.VideoTexture("video", [url], scene, true, false);
+	    var videoTexture = new BABYLON.VideoTexture("video", [url], scene, true, false);
     videoTexture.invertZ=false
 
 	mat.diffuseTexture = videoTexture;
@@ -155,17 +157,18 @@ function addVideo(type="side",url="./video/video_1.mp4"){
 }
 function addPicture(type="side",url="./textures/result/r1.jpg"){
     var screen = BABYLON.MeshBuilder.CreatePlane("screen",{height:90/3, width: 160/3},scene)
-    screen.billboardMode=2
+    screen.billboardMode=7
+    screen.scaling=new BABYLON.Vector3(2,2,2)
     if(type=="front"){
         screen.position.y=80
         screen.position.x=0
         screen.position.z=-300
-        screen.rotation.x=0.5
+        // screen.rotation.x=0.5
     }else if(type=="side"){
         screen.position.y=80
         screen.position.x=300
         screen.position.z=0
-        screen.rotation.x=0.5    
+        // screen.rotation.x=0.5    
     }
     var mat = new BABYLON.StandardMaterial("mat", scene);
     mat.diffuseTexture = new BABYLON.Texture(url, scene);
@@ -218,4 +221,27 @@ function vr(scene,ground){
     vrHelper.displayLaserPointer = true
     vrHelper.enableInteractions();
     return vrHelper
+}
+
+function createBackSphere(scene,position,towards){
+    let material_sphere = new BABYLON.StandardMaterial('spheremat', scene);
+    material_sphere.diffuseColor = BABYLON.Color3.Gray();
+    material_sphere.diffuseColor.hasAlpha = true;
+    material_sphere.alpha=0.3
+
+    let hoop = BABYLON.MeshBuilder.CreateTorus("hoop", {thickness: 0.01,tessellation:36}, scene);
+    hoop.scaling=new BABYLON.Vector3(20,20,20)
+    hoop.position=position
+    hoop.lookAt(new BABYLON.Vector3(towards.x,0,towards.z))
+    hoop.definedFacingForward=true
+
+    let move=setInterval(()=>{
+        hoop=hoop.movePOV(0,5,0)
+        hoop.scaling.z+=0.05
+        hoop.scaling.x+=0.05
+    },10)
+    setTimeout(()=>{
+        hoop.dispose()
+        clearInterval(move)
+    },500)
 }
