@@ -6,16 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>AeroSimulate</title>
-    <script src="https://preview.babylonjs.com/babylon.js"></script>
-    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <script src="./js/babylon/babylonjs.min.js"></script>
+    <script src="./js/babylon/babylonjs.gui.min.js"></script>
     <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <!-- <script src="./js/babylon/babylonjs.loaders.min.js"></script> -->
 
     <script src="./js/frame/public.js"></script>    
     <script src="./js/frame/beginScene.js"></script>
     <script src="./js/frame/firstScene.js"></script>
     <script src="./js/frame/secondScene.js"></script>
     <script src="./js/frame/thirdScene.js"></script>
-    <script src="./js/frame/forthScene.js"></script>
+    <script src="./js/frame/forthScene_b.js"></script>
+    <script src="./js/frame/forthScene_d.js"></script>
     <script src="./js/frame/simpleScene.js"></script>
 
     <!-- <script src="./js/index/public.js"></script>    
@@ -58,7 +60,8 @@
         stencil: true
     });
 
-    var scene=secondScene()
+    // var scene=secondScene()
+    var scene=forthScene_b()
 
     BABYLON.SceneLoader.ShowLoadingScreen=true
 

@@ -1,4 +1,4 @@
-var secondScene = function (aeroplane="F117") {
+var forthScene_b = function (aeroplane="F117") {
     var scene = new BABYLON.Scene(engine);
 
     type="side"
@@ -11,7 +11,7 @@ var secondScene = function (aeroplane="F117") {
     var ground = frameGround(scene)
     var two_panel = addTimePanel(scene,aeroplane)
     var vrHelper=vr(scene,ground)
-    var tri_panel = addBackButton("表面电场分布（频率）")
+    var tri_panel = addBackButton("RCS测量")
 
     var assetsManager = new BABYLON.AssetsManager(scene);
     assetsManager.onTaskError = function (task) {
@@ -24,10 +24,12 @@ var secondScene = function (aeroplane="F117") {
     };
     if(aeroplane=="F117"){
         addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
+        // addRadar(assetsManager,new BABYLON.Vector3(260,-10,100),0.3)
         addF117(assetsManager,scene)
         assetsManager.load();
     }else{
         addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
+        // addRadar(assetsManager,new BABYLON.Vector3(260,-10,100),0.3)
         addA380(assetsManager,scene)
         assetsManager.load();
     }
@@ -76,6 +78,11 @@ function addTimePanel(scene_t,aeroplane) {
         "433MHz",
         "2.4GHz"
     ]
+
+    var columns_l2=[
+        "单雷达",
+        "双雷达"
+    ]
     // Plane
     var plane_r = BABYLON.Mesh.CreatePlane("plane",25);
     plane_r.position.x = 300;
@@ -102,10 +109,10 @@ function addTimePanel(scene_t,aeroplane) {
             scene.meshes.forEach((element)=>{
                 if(element.name=="t02_merged"||element.name=="Archmod73_0407_merged"){
                     console.log("aerofly",element.position)
-                    aerofly(element)
+                    aerofly_b(element)
                 }
                 setTimeout(()=>{
-                    video=addPicture("side")
+                    // video=addVideo("side")
                 },3000)
             })
         }else{
@@ -118,10 +125,10 @@ function addTimePanel(scene_t,aeroplane) {
             if (state) {
                 if(element=="F117"){
                     scene.dispose()
-                    scene=secondScene("F117")
+                    scene=forthScene_b("F117")
                 }else{
                     scene.dispose()
-                    scene=secondScene("A380")
+                    scene=forthScene_b("A380")
                 }
             }
         })
@@ -181,7 +188,7 @@ function addTimePanel(scene_t,aeroplane) {
     // plane_r.height=100
     plane_r2.position.x = 300;
     plane_r2.position.y = 88
-    plane_r2.position.z = 60
+    plane_r2.position.z = -60
     plane_r2.billboardMode = 2
 
     // GUI
@@ -231,10 +238,43 @@ function addTimePanel(scene_t,aeroplane) {
             }
         })
     });
+    // ----------------------------------------
+    var plane_l2 = BABYLON.Mesh.CreatePlane("plane",25);
+    // plane_r.height=100
+    plane_l2.position.x = 300;
+    plane_l2.position.y = 88
+    plane_l2.position.z = 60
+    plane_l2.billboardMode = 2
+
+    // GUI
+    var advancedTexture_l2 = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane_l2);
+
+    var panel_l2 = new BABYLON.GUI.StackPanel();
+    panel_l2.top = "0px";
+    advancedTexture_l2.addControl(panel_l2);
+
+    var textblock_l2 = new BABYLON.GUI.TextBlock();
+    textblock_l2.height = "150px";
+    textblock_l2.fontSize = 100;
+    textblock_l2.text = "选择模式";
+    panel_l2.addControl(textblock_l2);
+
+    columns_l2.forEach(element => {
+        addRadio(element, panel_l2,textblock_l2,(state)=>{
+            if (state) {
+                if(element=="单雷达"){
+                    scene.dispose()
+                    scene=forthScene_b(aeroplane)
+                }else{
+                    scene.dispose()
+                    scene=forthScene_d(aeroplane)
+                }
+            }
+        })
+    });
 }
 
-function aerofly_2(aeroplane){
-    let temp_pos
+function aerofly_b(aeroplane){
     const radar=scene.getMeshByName("??_merged").position
     console.log(radar)
     if(aeroplane.position.z==0&&aeroplane.position.x<600){
@@ -242,8 +282,7 @@ function aerofly_2(aeroplane){
         setTimeout(()=>{
                 back=setInterval(()=>{
                 temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
-                temp_rot=new BABYLON.Vector3(temp_pos.x-radar.x,temp_pos.y-radar.y,temp_pos.z-radar.z)
-                createBackSphere(scene,temp_pos,radar)
+                // createBackSphere(scene,temp_pos)
             },100)
         },200)
         let move=setInterval(()=>{
@@ -257,10 +296,13 @@ function aerofly_2(aeroplane){
         let move=setInterval(()=>{
             aeroplane.position.z-=1
             temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
-            temp_rot=new BABYLON.Vector3(radar.x-temp_pos.x,radar.y-temp_pos.y,radar.z-temp_pos.z)
-            createBackSphere(scene,temp_pos,radar)
-            if(aeroplane.position.z<=-600){
+            // createBackSphere(scene,temp_pos)
+        },5)
+        let move=setInterval(()=>{
+            aeroplane.position.x+=1
+            if(aeroplane.position.x>=600){
                 clearInterval(move)
+                clearInterval(back)
             }
         },5)
     }

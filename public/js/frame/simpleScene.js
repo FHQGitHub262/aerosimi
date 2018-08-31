@@ -72,7 +72,7 @@ function createPanel() {
                 break
             case columns[3]:
                 scene.dispose()
-                scene = forthScene()
+                scene = forthScene_d()
                 break
             default:
                 textblock.text = "请先选中实验再开始"

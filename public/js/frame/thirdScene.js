@@ -1,4 +1,4 @@
-var secondScene = function (aeroplane="F117") {
+var thirdScene = function (aeroplane="F117") {
     var scene = new BABYLON.Scene(engine);
 
     type="side"
@@ -11,7 +11,7 @@ var secondScene = function (aeroplane="F117") {
     var ground = frameGround(scene)
     var two_panel = addTimePanel(scene,aeroplane)
     var vrHelper=vr(scene,ground)
-    var tri_panel = addBackButton("表面电场分布（频率）")
+    var tri_panel = addBackButton("表面电场分布（时间）")
 
     var assetsManager = new BABYLON.AssetsManager(scene);
     assetsManager.onTaskError = function (task) {
@@ -233,7 +233,7 @@ function addTimePanel(scene_t,aeroplane) {
     });
 }
 
-function aerofly_2(aeroplane){
+function aerofly_3(aeroplane){
     let temp_pos
     const radar=scene.getMeshByName("??_merged").position
     console.log(radar)

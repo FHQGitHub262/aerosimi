@@ -1,10 +1,10 @@
 // models
-function addRadar(assetsManager,position){
+function addRadar(assetsManager,position,rotation=0.7){
     var meshTask = assetsManager.addMeshTask("radar", "", "./mesh/radar/", "rada.obj");
     meshTask.onSuccess = function (task) {
         let radar= BABYLON.Mesh.MergeMeshes(task.loadedMeshes,true,true)
         radar.scaling=new BABYLON.Vector3(0.1,0.1,0.1)
-        radar.rotation=new BABYLON.Vector3(0,Math.PI*0.7,0)
+        radar.rotation=new BABYLON.Vector3(0,Math.PI*rotation,0)
 
         radar.position=position
     }
@@ -223,25 +223,30 @@ function vr(scene,ground){
     return vrHelper
 }
 
-function createBackSphere(scene,position,towards){
+function createBackSphere(scene,position,towards=new BABYLON.Vector3(257,15,-98)){
     let material_sphere = new BABYLON.StandardMaterial('spheremat', scene);
-    material_sphere.diffuseColor = BABYLON.Color3.Gray();
+    material_sphere.diffuseColor = new BABYLON.Color3(0.2,0.3,0.6);
     material_sphere.diffuseColor.hasAlpha = true;
-    material_sphere.alpha=0.3
+    material_sphere.alpha=0.5
 
-    let hoop = BABYLON.MeshBuilder.CreateTorus("hoop", {thickness: 0.01,tessellation:36}, scene);
-    hoop.scaling=new BABYLON.Vector3(20,20,20)
+    let hoop = BABYLON.MeshBuilder.CreateTorus("hoop", {thickness: 0.1,tessellation:36}, scene);
+    hoop.scaling=new BABYLON.Vector3(5,5,5)
     hoop.position=position
-    hoop.lookAt(new BABYLON.Vector3(towards.x,0,towards.z))
-    hoop.definedFacingForward=true
+    hoop.material=material_sphere
+    hoop.outlineColor=new BABYLON.Color3(0.4,0.4,0.4)
+
+    hoop.lookAt(towards)
+    hoop.rotation.x=+Math.PI*0.5
 
     let move=setInterval(()=>{
-        hoop=hoop.movePOV(0,5,0)
-        hoop.scaling.z+=0.05
-        hoop.scaling.x+=0.05
+        hoop.lookAt(towards)
+        hoop.rotation.x-=Math.PI*0.5
+        hoop.movePOV(0,15,0)
+        hoop.scaling.z+=0.25
+        hoop.scaling.x+=0.25
     },10)
     setTimeout(()=>{
         hoop.dispose()
         clearInterval(move)
-    },500)
+    },250)
 }
