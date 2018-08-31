@@ -9,7 +9,7 @@ var forthScene_d = function (aeroplane="F117") {
     sideCamera=sideCam(scene)
     scene.activeCamera=sideCamera
     var ground = frameGround(scene)
-    var two_panel = addTimePanel(scene,aeroplane)
+    var two_panel = addRCSPanel_d(scene,aeroplane)
     var vrHelper=vr(scene,ground)
     var tri_panel = addBackButton("RCS测量")
 
@@ -37,7 +37,7 @@ var forthScene_d = function (aeroplane="F117") {
 };
 
 // -----------------------------------------
-function addTimePanel(scene_t,aeroplane) {
+function addRCSPanel_d(scene_t,aeroplane) {
     var addRadio = function (text, parent,textblock,callback=function(state){
         if (state) {
             textblock.text = "当前：" + text;
@@ -108,11 +108,11 @@ function addTimePanel(scene_t,aeroplane) {
         if(aeroplane!=""&&wave!=""&&type!=""){
             scene.meshes.forEach((element)=>{
                 if(element.name=="t02_merged"||element.name=="Archmod73_0407_merged"){
-                    console.log("aerofly",element.position)
+                    console.log("aeroflyd",element.position)
                     aerofly_d(element)
                 }
                 setTimeout(()=>{
-                    // video=addVideo("side")
+                    video=addVideo("side")
                 },3000)
             })
         }else{

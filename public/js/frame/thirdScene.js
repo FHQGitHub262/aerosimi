@@ -101,11 +101,10 @@ function addTimePanel(scene_t,aeroplane) {
         if(aeroplane!=""&&wave!=""&&type!=""){
             scene.meshes.forEach((element)=>{
                 if(element.name=="t02_merged"||element.name=="Archmod73_0407_merged"){
-                    console.log("aerofly",element.position)
-                    aerofly(element)
+                    aerofly_3(element)
                 }
                 setTimeout(()=>{
-                    video=addPicture("side")
+                    video=addVideo("side")
                 },3000)
             })
         }else{
@@ -226,7 +225,7 @@ function addTimePanel(scene_t,aeroplane) {
                 }
                 if(video!=""){
                     video.dispose()
-                    video=""
+                    video="" 
                 }
             }
         })
@@ -236,13 +235,11 @@ function addTimePanel(scene_t,aeroplane) {
 function aerofly_3(aeroplane){
     let temp_pos
     const radar=scene.getMeshByName("??_merged").position
-    console.log(radar)
     if(aeroplane.position.z==0&&aeroplane.position.x<600){
         let back=0
         setTimeout(()=>{
                 back=setInterval(()=>{
                 temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
-                temp_rot=new BABYLON.Vector3(temp_pos.x-radar.x,temp_pos.y-radar.y,temp_pos.z-radar.z)
                 createBackSphere(scene,temp_pos,radar)
             },100)
         },200)
@@ -257,7 +254,6 @@ function aerofly_3(aeroplane){
         let move=setInterval(()=>{
             aeroplane.position.z-=1
             temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
-            temp_rot=new BABYLON.Vector3(radar.x-temp_pos.x,radar.y-temp_pos.y,radar.z-temp_pos.z)
             createBackSphere(scene,temp_pos,radar)
             if(aeroplane.position.z<=-600){
                 clearInterval(move)

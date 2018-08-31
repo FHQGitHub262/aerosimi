@@ -39,6 +39,7 @@ function createPanel() {
     var plane = BABYLON.Mesh.CreatePlane("plane", 20);
     plane.position.y = 3;
     plane.position.z = -290
+    plane.billboardMode = 7
 
     // GUI
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);

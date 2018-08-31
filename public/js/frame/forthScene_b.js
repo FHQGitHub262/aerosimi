@@ -9,7 +9,7 @@ var forthScene_b = function (aeroplane="F117") {
     sideCamera=sideCam(scene)
     scene.activeCamera=sideCamera
     var ground = frameGround(scene)
-    var two_panel = addTimePanel(scene,aeroplane)
+    var two_panel = addRCSPanel_b(scene,aeroplane)
     var vrHelper=vr(scene,ground)
     var tri_panel = addBackButton("RCS测量")
 
@@ -37,7 +37,7 @@ var forthScene_b = function (aeroplane="F117") {
 };
 
 // -----------------------------------------
-function addTimePanel(scene_t,aeroplane) {
+function addRCSPanel_b(scene_t,aeroplane) {
     var addRadio = function (text, parent,textblock,callback=function(state){
         if (state) {
             textblock.text = "当前：" + text;
@@ -108,11 +108,11 @@ function addTimePanel(scene_t,aeroplane) {
         if(aeroplane!=""&&wave!=""&&type!=""){
             scene.meshes.forEach((element)=>{
                 if(element.name=="t02_merged"||element.name=="Archmod73_0407_merged"){
-                    console.log("aerofly",element.position)
+                    console.log("aeroflyb",element.position)
                     aerofly_b(element)
                 }
                 setTimeout(()=>{
-                    // video=addVideo("side")
+                    video=addVideo("side")
                 },3000)
             })
         }else{
@@ -276,13 +276,13 @@ function addTimePanel(scene_t,aeroplane) {
 
 function aerofly_b(aeroplane){
     const radar=scene.getMeshByName("??_merged").position
-    console.log(radar)
+    console.log("b")
     if(aeroplane.position.z==0&&aeroplane.position.x<600){
         let back=0
         setTimeout(()=>{
                 back=setInterval(()=>{
                 temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
-                // createBackSphere(scene,temp_pos)
+                createBackSphere(scene,temp_pos)
             },100)
         },200)
         let move=setInterval(()=>{
@@ -293,11 +293,14 @@ function aerofly_b(aeroplane){
             }
         },5)
     }else if(aeroplane.position.x==0&&aeroplane.position.z>-600){
-        let move=setInterval(()=>{
-            aeroplane.position.z-=1
-            temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
-            // createBackSphere(scene,temp_pos)
-        },5)
+        let back=0
+        setTimeout(()=>{
+            back=setInterval(()=>{
+                aeroplane.position.z-=1
+                temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
+                createBackSphere(scene,temp_pos)
+            },100)
+        },200)
         let move=setInterval(()=>{
             aeroplane.position.x+=1
             if(aeroplane.position.x>=600){

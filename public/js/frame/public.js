@@ -231,6 +231,7 @@ function createBackSphere(scene,position,towards=new BABYLON.Vector3(257,15,-98)
 
     let hoop = BABYLON.MeshBuilder.CreateTorus("hoop", {thickness: 0.1,tessellation:36}, scene);
     hoop.scaling=new BABYLON.Vector3(5,5,5)
+    // hoop.position=towards
     hoop.position=position
     hoop.material=material_sphere
     hoop.outlineColor=new BABYLON.Color3(0.4,0.4,0.4)
