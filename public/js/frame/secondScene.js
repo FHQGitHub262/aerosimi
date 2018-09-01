@@ -24,11 +24,11 @@ var secondScene = function (aeroplane="F117") {
     };
     if(aeroplane=="F117"){
         addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
-        addF117(assetsManager,scene)
+        addF117(assetsManager)
         assetsManager.load();
     }else{
         addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
-        addA380(assetsManager,scene)
+        addA380(assetsManager)
         assetsManager.load();
     }
     return scene;
@@ -43,19 +43,20 @@ function addFrequencePanel(scene_t,aeroplane) {
         }
     }){
         var button = new BABYLON.GUI.RadioButton();
-        button.width = "40px";
-        button.height = "40px";
+        button.width = "20px";
+        button.height = "20px";
         button.color = "white";
         button.background = "orange";
 
         button.onIsCheckedChangedObservable.add(callback);
 
-        var header = BABYLON.GUI.Control.AddHeader(button, text, "400px", {
+        var header = BABYLON.GUI.Control.AddHeader(button, text, "100px", {
             isHorizontal: true,
             controlFirst: true
         });
-        header.height = "150px";
-        header.children[1].fontSize = 60;
+        header.height = "75px";
+        header.color="black"
+        header.children[1].fontSize = 20;
         header.children[1].onPointerDownObservable.add(function () {
             button.isChecked = !button.isChecked;
         });
@@ -76,32 +77,32 @@ function addFrequencePanel(scene_t,aeroplane) {
         "433MHz",
         "2.4GHz"
     ]
-    // Plane
-    var plane_r = BABYLON.Mesh.CreatePlane("plane",25);
-    plane_r.position.x = 300;
-    plane_r.position.y = 100
-    plane_r.position.z = 60
-    plane_r.billboardMode = 2
-
     // GUI
-    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane_r);
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_r");
 
     var panel = new BABYLON.GUI.StackPanel();
-    panel.top = "0px";
+    panel.width="200px"
+    panel.height="200px"
+    panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP
+    panel.background="white"
+    panel.alpha=0.8
+    panel.top=60
+    panel.left=30
     advancedTexture.addControl(panel);
     // -------------------------------------------
     var button1 = BABYLON.GUI.Button.CreateSimpleButton("but1", "开始实验");
-    button1.width = 1;
-    button1.height = "100px";
+    button1.width = "200px";
+    button1.height = "40px";
     button1.color = "white";
-    button1.fontSize = 50;
+    button1.fontSize = 20;
     button1.background = "orange";
     panel.addControl(button1);
     button1.onPointerClickObservable.add(() => {
         if(aeroplane!=""&&wave!=""&&type!=""){
             scene.meshes.forEach((element)=>{
                 if(element.name=="t02_merged"||element.name=="Archmod73_0407_merged"){
-                    aerofly_2(element)
+                    aerofly_3(element)
                 }
                 setTimeout(()=>{
                     video=addPicture("side")
@@ -126,21 +127,25 @@ function addFrequencePanel(scene_t,aeroplane) {
         })
     });
     // ------------------------------------------------
-    var plane_l = BABYLON.Mesh.CreatePlane("plane_l", 25);
-    plane_l.position.x = 300;
-    plane_l.position.y = 100
-    plane_l.position.z = -60
-    plane_l.billboardMode = 2
-
-    var advancedTexture_l = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane_l)
+    var advancedTexture_l = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_l");
 
     var panel_l = new BABYLON.GUI.StackPanel();
+    panel_l.width="200px"
+    panel_l.height="200px"
     panel_l.top = "0px";
+    panel_l.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
+    panel_l.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER
+    panel_l.background="white"
+    panel_l.alpha=0.8
+    panel_l.top=-110
+    panel_l.left=30
     advancedTexture_l.addControl(panel_l);
 
     var textblock_l = new BABYLON.GUI.TextBlock();
-    textblock_l.height = "150px";
-    textblock_l.fontSize = 100;
+    textblock_l.height = "40px";
+    textblock_l.fontSize = 25;
+    textblock_l.color="black"
+    textblock_l.background="orange"
     textblock_l.text = "雷达类型";
     panel_l.addControl(textblock_l);
     columns_radar.forEach(element => {
@@ -176,23 +181,21 @@ function addFrequencePanel(scene_t,aeroplane) {
     });
 
     // -------------------------------------------------
-    var plane_r2 = BABYLON.Mesh.CreatePlane("plane",25);
-    // plane_r.height=100
-    plane_r2.position.x = 300;
-    plane_r2.position.y = 88
-    plane_r2.position.z = 60
-    plane_r2.billboardMode = 2
-
-    // GUI
-    var advancedTexture_r2 = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane_r2);
-
     var panel_r2 = new BABYLON.GUI.StackPanel();
-    panel_r2.top = "0px";
-    advancedTexture_r2.addControl(panel_r2);
+    panel_r2.width="200px"
+    panel_r2.height="200px"
+    panel_r2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    panel_r2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM
+    panel_r2.background="white"
+    panel_r2.alpha=0.8
+    panel_r2.top=-280
+    panel_r2.left=30
+    advancedTexture.addControl(panel_r2);
 
     var textblock_r2 = new BABYLON.GUI.TextBlock();
-    textblock_r2.height = "150px";
-    textblock_r2.fontSize = 100;
+    textblock_r2.height = "40px";
+    textblock_r2.fontSize = 25;
+    textblock_r2.color="black"
     textblock_r2.text = "选择角度";
     panel_r2.addControl(textblock_r2);
 
@@ -225,7 +228,7 @@ function addFrequencePanel(scene_t,aeroplane) {
                 }
                 if(video!=""){
                     video.dispose()
-                    video=""
+                    video="" 
                 }
             }
         })

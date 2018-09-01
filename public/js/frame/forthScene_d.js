@@ -25,12 +25,12 @@ var forthScene_d = function (aeroplane="F117") {
     if(aeroplane=="F117"){
         addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
         addRadar(assetsManager,new BABYLON.Vector3(260,-10,100),0.3)
-        addF117(assetsManager,scene)
+        addF117(assetsManager)
         assetsManager.load();
     }else{
         addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
         addRadar(assetsManager,new BABYLON.Vector3(260,-10,100),0.3)
-        addA380(assetsManager,scene)
+        addA380(assetsManager)
         assetsManager.load();
     }
     return scene;
@@ -45,19 +45,20 @@ function addRCSPanel_d(scene_t,aeroplane) {
         }
     }){
         var button = new BABYLON.GUI.RadioButton();
-        button.width = "40px";
-        button.height = "40px";
+        button.width = "20px";
+        button.height = "20px";
         button.color = "white";
         button.background = "orange";
 
         button.onIsCheckedChangedObservable.add(callback);
 
-        var header = BABYLON.GUI.Control.AddHeader(button, text, "400px", {
+        var header = BABYLON.GUI.Control.AddHeader(button, text, "100px", {
             isHorizontal: true,
             controlFirst: true
         });
-        header.height = "150px";
-        header.children[1].fontSize = 60;
+        header.height = "75px";
+        header.color="black"
+        header.children[1].fontSize = 20;
         header.children[1].onPointerDownObservable.add(function () {
             button.isChecked = !button.isChecked;
         });
@@ -83,25 +84,24 @@ function addRCSPanel_d(scene_t,aeroplane) {
         "单雷达",
         "双雷达"
     ]
-    // Plane
-    var plane_r = BABYLON.Mesh.CreatePlane("plane",25);
-    plane_r.position.x = 300;
-    plane_r.position.y = 100
-    plane_r.position.z = 60
-    plane_r.billboardMode = 2
-
-    // GUI
-    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane_r);
+    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_r");
 
     var panel = new BABYLON.GUI.StackPanel();
-    panel.top = "0px";
+    panel.width="200px"
+    panel.height="200px"
+    panel.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    panel.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP
+    panel.background="white"
+    panel.alpha=0.8
+    panel.top=60
+    panel.left=30
     advancedTexture.addControl(panel);
     // -------------------------------------------
     var button1 = BABYLON.GUI.Button.CreateSimpleButton("but1", "开始实验");
-    button1.width = 1;
-    button1.height = "100px";
+    button1.width = "200px";
+    button1.height = "40px";
     button1.color = "white";
-    button1.fontSize = 50;
+    button1.fontSize = 20;
     button1.background = "orange";
     panel.addControl(button1);
     button1.onPointerClickObservable.add(() => {
@@ -134,21 +134,25 @@ function addRCSPanel_d(scene_t,aeroplane) {
         })
     });
     // ------------------------------------------------
-    var plane_l = BABYLON.Mesh.CreatePlane("plane_l", 25);
-    plane_l.position.x = 300;
-    plane_l.position.y = 100
-    plane_l.position.z = -60
-    plane_l.billboardMode = 2
-
-    var advancedTexture_l = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane_l)
+    var advancedTexture_l = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_l");
 
     var panel_l = new BABYLON.GUI.StackPanel();
+    panel_l.width="200px"
+    panel_l.height="200px"
     panel_l.top = "0px";
+    panel_l.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
+    panel_l.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER
+    panel_l.background="white"
+    panel_l.alpha=0.8
+    panel_l.top=-110
+    panel_l.left=30
     advancedTexture_l.addControl(panel_l);
 
     var textblock_l = new BABYLON.GUI.TextBlock();
-    textblock_l.height = "150px";
-    textblock_l.fontSize = 100;
+    textblock_l.height = "40px";
+    textblock_l.fontSize = 25;
+    textblock_l.color="black"
+    textblock_l.background="orange"
     textblock_l.text = "雷达类型";
     panel_l.addControl(textblock_l);
     columns_radar.forEach(element => {
@@ -184,23 +188,21 @@ function addRCSPanel_d(scene_t,aeroplane) {
     });
 
     // -------------------------------------------------
-    var plane_r2 = BABYLON.Mesh.CreatePlane("plane",25);
-    plane_r2.position.x = 300;
-    plane_r2.position.y = 88
-    plane_r2.position.z = -60
-    // plane_r2.position.z = 60
-    plane_r2.billboardMode = 2
-
-    // GUI
-    var advancedTexture_r2 = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane_r2);
-
     var panel_r2 = new BABYLON.GUI.StackPanel();
-    panel_r2.top = "0px";
-    advancedTexture_r2.addControl(panel_r2);
+    panel_r2.width="200px"
+    panel_r2.height="200px"
+    panel_r2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    panel_r2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM
+    panel_r2.background="white"
+    panel_r2.alpha=0.8
+    panel_r2.top=-280
+    panel_r2.left=30
+    advancedTexture.addControl(panel_r2);
 
     var textblock_r2 = new BABYLON.GUI.TextBlock();
-    textblock_r2.height = "150px";
-    textblock_r2.fontSize = 100;
+    textblock_r2.height = "40px";
+    textblock_r2.fontSize = 25;
+    textblock_r2.color="black"
     textblock_r2.text = "选择角度";
     panel_r2.addControl(textblock_r2);
 
@@ -239,23 +241,23 @@ function addRCSPanel_d(scene_t,aeroplane) {
         })
     });
     // ----------------------------------------
-    var plane_l2 = BABYLON.Mesh.CreatePlane("plane",25);
-    plane_l2.position.x = 300;
-    plane_l2.position.y = 88
-    plane_l2.position.z = 60
-    // plane_l2.position.z = -60
-    plane_l2.billboardMode = 2
-
-    // GUI
-    var advancedTexture_l2 = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane_l2);
+    var advancedTexture_l2 = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("model");
 
     var panel_l2 = new BABYLON.GUI.StackPanel();
+    panel_l2.width="120px"
+    panel_l2.height="140px"
     panel_l2.top = "0px";
+    panel_l2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT
+    panel_l2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP
+    // panel_l2.background="white"
+    panel_l2.alpha=0.7
+    panel_l2.top=10
+    panel_l2.left=-30
     advancedTexture_l2.addControl(panel_l2);
 
     var textblock_l2 = new BABYLON.GUI.TextBlock();
-    textblock_l2.height = "150px";
-    textblock_l2.fontSize = 100;
+    textblock_l2.height = "0px";
+    textblock_l2.fontSize = 25;
     textblock_l2.text = "选择模式";
     panel_l2.addControl(textblock_l2);
 
@@ -304,3 +306,4 @@ function aerofly_d(aeroplane){
         },5)
     }
 }
+

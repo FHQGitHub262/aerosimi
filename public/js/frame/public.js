@@ -21,21 +21,16 @@ function addA380(assetsManager){
     }
 }
 
-function addF117(assetsManager){
+function addF117(assetsManager,scaling=new BABYLON.Vector3(0.2,0.2,0.2),y=100,z=300){
     var meshTask = assetsManager.addMeshTask("f117", "", "./mesh/f117/", "f117.obj");
     meshTask.onSuccess = function (task) {
         let f117=BABYLON.Mesh.MergeMeshes(task.loadedMeshes,true,true)
-        f117.position.y+=100
-        f117.position.z=300
+        f117.position.y+=y
+        f117.position.z=z
         let mat=new BABYLON.StandardMaterial()
         mat.diffuseColor = new BABYLON.Color3(0.28, 0.3, 0.3);
-        f117.scaling=new BABYLON.Vector3(0.2,0.2,0.2)
+        f117.scaling=scaling
         f117.material=mat
-
-        f111.fly=function(){
-            console.log(this)
-        }
-        console.log(scene)
     }
 }
 
@@ -61,7 +56,7 @@ function addBackButton(title){
     header = new BABYLON.GUI.TextBlock();
     header.text = title;
     header.height = "40px";
-    header.color = "black";
+    header.color = "white";
     header.horizontalAlignment=BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     header.verticalAlignment=BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
     header.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;

@@ -13,7 +13,7 @@ var simpleScene=function(){
         console.log("error while loading " + task.name);
     }
 
-    addF117(assetsManager,scene)
+    addF117(assetsManager,new BABYLON.Vector3(0.8,0.8,0.8),30,0)
 
     engine.loadingUIBackgroundColor = "Black";
     assetsManager.load();
