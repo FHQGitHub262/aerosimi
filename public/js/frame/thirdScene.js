@@ -101,7 +101,7 @@ function addTimePanel(scene_t,aeroplane) {
     button1.onPointerClickObservable.add(() => {
         if(aeroplane!=""&&wave!=""&&type!=""){
             scene.meshes.forEach((element)=>{
-                if(element.name=="t02_merged"||element.name=="Archmod73_0407_merged"){
+                if(element.name=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.name=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
                     aerofly_3(element)
                 }
                 setTimeout(()=>{
@@ -206,7 +206,7 @@ function addTimePanel(scene_t,aeroplane) {
                 if(element=="正视图"){
                     type="front"
                     scene.meshes.forEach((element)=>{
-                        if(element.id=="t02_merged"||element.id=="Archmod73_0407_merged"){
+                        if(element.name=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.name=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
                             console.log(element.position)
                             if(element.position.z!=0){
                                 element.position=new BABYLON.Vector3(-300,element.position.y,0)
@@ -217,7 +217,7 @@ function addTimePanel(scene_t,aeroplane) {
                 }else{
                     scene.meshes.forEach((element)=>{
                         type="side"
-                        if(element.id=="t02_merged"||element.id=="Archmod73_0407_merged"){
+                        if(element.name=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.name=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
                             console.log(element.position)
                             if(element.position.x!=0){
                                 element.position=new BABYLON.Vector3(0,element.position.y,300)
@@ -237,7 +237,7 @@ function addTimePanel(scene_t,aeroplane) {
 
 function aerofly_3(aeroplane){
     let temp_pos
-    const radar=scene.getMeshByName("??_merged").position
+    const radar=scene.getMeshByName("3ea9f555-9eed-4dba-9e5e-3709634ec056_merged").position
     if(aeroplane.position.z==0&&aeroplane.position.x<600){
         let back=0
         setTimeout(()=>{

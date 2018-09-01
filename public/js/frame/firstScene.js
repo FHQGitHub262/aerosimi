@@ -61,9 +61,9 @@ function addRadarPanel() {
     panel.addControl(button1);
     button1.onPointerClickObservable.add(() => {
         if(next=="433MHz")
-            wave=createRadarSphere(scene,1,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+            wave=createRadarSphere(scene,1.5,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
         else
-            wave=createRadarSphere(scene,1,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+            wave=createRadarSphere(scene,0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
         setTimeout(()=>{
             clearInterval(wave)
         },10000)

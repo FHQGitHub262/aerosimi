@@ -9,25 +9,14 @@
     <script src="./js/babylon/babylonjs.min.js"></script>
     <script src="./js/babylon/babylonjs.gui.min.js"></script>
     <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
-    <!-- <script src="./js/babylon/babylonjs.loaders.min.js"></script> -->
 
     <script src="./js/frame/public.js"></script>    
-    <script src="./js/frame/beginScene.js"></script>
     <script src="./js/frame/firstScene.js"></script>
     <script src="./js/frame/secondScene.js"></script>
     <script src="./js/frame/thirdScene.js"></script>
     <script src="./js/frame/forthScene_b.js"></script>
     <script src="./js/frame/forthScene_d.js"></script>
     <script src="./js/frame/simpleScene.js"></script>
-
-    <!-- <script src="./js/index/public.js"></script>    
-    <script src="./js/index/water.js"></script>
-    <script src="./js/index/beginScene.js"></script>
-    <script src="./js/index/firstScene.js"></script>
-    <script src="./js/index/secondScene.js"></script>
-    <script src="./js/index/thirdScene.js"></script>
-    <script src="./js/index/forthScene.js"></script> -->
-    <!-- <script src="./js/index/simpleScene.js"></script> -->
     <style>
         html,
         body {
@@ -61,8 +50,8 @@
     });
     engine.loadingUIText="加载中"
 
-    var scene=forthScene_b()
-    // var scene=simpleScene()
+    // var scene=forthScene_b()
+    var scene=simpleScene()
 
     BABYLON.SceneLoader.ShowLoadingScreen=true
 

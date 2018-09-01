@@ -11,11 +11,12 @@ function addRadar(assetsManager,position,rotation=0.7){
 }
 
 function addA380(assetsManager){
-    var meshTask = assetsManager.addMeshTask("a380", "", "./mesh/", "a380.obj");
+    var meshTask = assetsManager.addMeshTask("a380", "", "./mesh/a380/", "a380.obj");
     meshTask.onSuccess = function (task) {
         let a380=BABYLON.Mesh.MergeMeshes(task.loadedMeshes,true,true)
         a380.scaling=new BABYLON.Vector3(0.00175,0.00175,0.00175)
         a380.position.y+=100
+        a380.position.x=0
         a380.position.z=300
         a380.rotation=new BABYLON.Vector3(0,Math.PI,0)
     }
@@ -26,11 +27,13 @@ function addF117(assetsManager,scaling=new BABYLON.Vector3(0.2,0.2,0.2),y=100,z=
     meshTask.onSuccess = function (task) {
         let f117=BABYLON.Mesh.MergeMeshes(task.loadedMeshes,true,true)
         f117.position.y+=y
+        f117.position.x=0        
         f117.position.z=z
         let mat=new BABYLON.StandardMaterial()
         mat.diffuseColor = new BABYLON.Color3(0.28, 0.3, 0.3);
         f117.scaling=scaling
         f117.material=mat
+        console.log(f117.id)
     }
 }
 
@@ -74,7 +77,7 @@ function addCloseButton(screen){
     button.height = "50px";
     button.color = "white";
     button.background = "gray";
-    // button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+
     button.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 
     advancedTexture.addControl(button);    
