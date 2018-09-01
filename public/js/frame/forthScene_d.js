@@ -107,7 +107,7 @@ function addRCSPanel_d(scene_t,aeroplane) {
     button1.onPointerClickObservable.add(() => {
         if(aeroplane!=""&&wave!=""&&type!=""){
             scene.meshes.forEach((element)=>{
-                if(element.name=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.name=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
+                if(element.state=="f117"||element.state=="a380"){
                     console.log("aeroflyd",element.position)
                     aerofly_d(element)
                 }
@@ -213,7 +213,7 @@ function addRCSPanel_d(scene_t,aeroplane) {
                 if(element=="正视图"){
                     type="front"
                     scene.meshes.forEach((element)=>{
-                        if(element.name=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.name=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
+                        if(element.state=="f117"||element.state=="a380"){
                             console.log(element.position)
                             if(element.position.z!=0){
                                 element.position=new BABYLON.Vector3(-300,element.position.y,0)
@@ -224,7 +224,7 @@ function addRCSPanel_d(scene_t,aeroplane) {
                 }else{
                     scene.meshes.forEach((element)=>{
                         type="side"
-                        if(element.name=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.name=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
+                        if(element.state=="f117"||element.state=="a380"){
                             console.log(element.position)
                             if(element.position.x!=0){
                                 element.position=new BABYLON.Vector3(0,element.position.y,300)

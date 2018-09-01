@@ -102,8 +102,8 @@ function addFrequencePanel(scene_t,aeroplane) {
     button1.onPointerClickObservable.add(() => {
         if(aeroplane!=""&&wave!=""&&type!=""){
             scene.meshes.forEach((element)=>{
-                if(element.name=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.name=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
-                    aerofly_3(element)
+                if(element.state=="f117"||element.state=="a380"){
+                    aerofly_2(element)
                 }
                 setTimeout(()=>{
                     video=addPicture("side")
@@ -207,7 +207,7 @@ function addFrequencePanel(scene_t,aeroplane) {
                 if(element=="正视图"){
                     type="front"
                     scene.meshes.forEach((element)=>{
-                        if(element.name=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.name=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
+                        if(element.state=="f117"||element.state=="a380"){
                             console.log(element.position)
                             if(element.position.z!=0){
                                 element.position=new BABYLON.Vector3(-300,element.position.y,0)
@@ -218,7 +218,7 @@ function addFrequencePanel(scene_t,aeroplane) {
                 }else{
                     scene.meshes.forEach((element)=>{
                         type="side"
-                        if(element.name=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.name=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
+                        if(element.state=="f117"||element.state=="a380"){
                             console.log(element.position)
                             if(element.position.x!=0){
                                 element.position=new BABYLON.Vector3(0,element.position.y,300)
@@ -238,14 +238,14 @@ function addFrequencePanel(scene_t,aeroplane) {
 
 function aerofly_2(aeroplane){
     let temp_pos
-    const radar=scene.getMeshByName("3ea9f555-9eed-4dba-9e5e-3709634ec056_merged").position
-    console.log(radar)
+    let radar=getMeshByState("radar")
+    console.log("fly",radar)
+    radar=radar.position
     if(aeroplane.position.z==0&&aeroplane.position.x<600){
         let back=0
         setTimeout(()=>{
                 back=setInterval(()=>{
                 temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
-                temp_rot=new BABYLON.Vector3(temp_pos.x-radar.x,temp_pos.y-radar.y,temp_pos.z-radar.z)
                 createBackSphere(scene,temp_pos,radar)
             },100)
         },200)

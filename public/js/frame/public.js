@@ -5,7 +5,7 @@ function addRadar(assetsManager,position,rotation=0.7){
         let radar= BABYLON.Mesh.MergeMeshes(task.loadedMeshes,true,true)
         radar.scaling=new BABYLON.Vector3(0.1,0.1,0.1)
         radar.rotation=new BABYLON.Vector3(0,Math.PI*rotation,0)
-
+        radar.state="radar"
         radar.position=position
     }
 }
@@ -19,6 +19,7 @@ function addA380(assetsManager){
         a380.position.x=0
         a380.position.z=300
         a380.rotation=new BABYLON.Vector3(0,Math.PI,0)
+        a380.state="a380"
     }
 }
 
@@ -33,7 +34,8 @@ function addF117(assetsManager,scaling=new BABYLON.Vector3(0.2,0.2,0.2),y=100,z=
         mat.diffuseColor = new BABYLON.Color3(0.28, 0.3, 0.3);
         f117.scaling=scaling
         f117.material=mat
-        console.log(f117.id)
+        f117.state="f117"
+        console.log(f117)
     }
 }
 
@@ -125,7 +127,7 @@ function frameGround(scene){
     return ground
 }
 
-function addVideo(type="side",url="./video/video_1.mp4"){
+function addVideo(type="side",url=getVideoUrl()){
     var screen = BABYLON.MeshBuilder.CreatePlane("screen",{height:90/3, width: 160/3},scene)
     screen.billboardMode=7
     screen.scaling=new BABYLON.Vector3(2,2,2)
@@ -153,7 +155,7 @@ function addVideo(type="side",url="./video/video_1.mp4"){
 
     return screen
 }
-function addPicture(type="side",url="./textures/result/r1.jpg"){
+function addPicture(type="side",url=getPictureUrl()){
     var screen = BABYLON.MeshBuilder.CreatePlane("screen",{height:90/3, width: 160/3},scene)
     screen.billboardMode=7
     screen.scaling=new BABYLON.Vector3(2,2,2)
@@ -248,4 +250,22 @@ function createBackSphere(scene,position,towards=new BABYLON.Vector3(257,15,-98)
         hoop.dispose()
         clearInterval(move)
     },250)
+}
+
+function getMeshByState(state){
+    let item={}
+    scene.meshes.forEach((element)=>{
+        if(element.state==state){
+            item=element
+        }
+    })
+    return item
+}
+
+function getVideoUrl(plane,view){
+    return "./video/video_1.mp4"
+}
+
+function getPictureUrl(plane,view){
+    return "./textures/result/r1.jpg"
 }

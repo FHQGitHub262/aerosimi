@@ -13,8 +13,6 @@ var forthScene_b = function (aeroplane="F117") {
     var vrHelper=vr(scene,ground)
     var tri_panel = addBackButton("RCS测量")
 
-
-
     var assetsManager = new BABYLON.AssetsManager(scene);
     assetsManager.onTaskError = function (task) {
         console.log("error while loading " + task.name);
@@ -110,7 +108,7 @@ function addRCSPanel_b(scene_t,aeroplane) {
     button1.onPointerClickObservable.add(() => {
         if(aeroplane!=""&&wave!=""&&type!=""){
             scene.meshes.forEach((element)=>{
-                if(element.id=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.id=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
+                if(element.state=="f117"||element.state=="a380"){
                     console.log("aeroflyb",element.position)
                     aerofly_b(element)
                 }
@@ -217,7 +215,7 @@ function addRCSPanel_b(scene_t,aeroplane) {
                     console.log("front")
                     type="front"
                     scene.meshes.forEach((element)=>{
-                        if(element.id=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.id=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
+                        if(element.state=="f117"||element.state=="a380"){
                             console.log(element.position)
                             if(element.position.z!=0){
                                 element.position=new BABYLON.Vector3(-300,element.position.y,0)
@@ -228,7 +226,7 @@ function addRCSPanel_b(scene_t,aeroplane) {
                 }else{
                     scene.meshes.forEach((element)=>{
                         type="side"
-                        if(element.id=="fa9a950e-6100-4d56-8288-694a6f907907_merged"||element.id=="57209007-2ba8-4e0d-9afa-7d92c0f3d739_merged"){
+                        if(element.state=="f117"||element.state=="a380"){
                             console.log(element.position)
                             if(element.position.x!=0){
                                 element.position=new BABYLON.Vector3(0,element.position.y,300)
@@ -281,8 +279,7 @@ function addRCSPanel_b(scene_t,aeroplane) {
 }
 
 function aerofly_b(aeroplane){
-    const radar=scene.getMeshByName("3ea9f555-9eed-4dba-9e5e-3709634ec056_merged").position
-    console.log("b")
+    const radar=getMeshByState("radar").position
     if(aeroplane.position.z==0&&aeroplane.position.x<600){
         let back=0
         setTimeout(()=>{
@@ -308,7 +305,7 @@ function aerofly_b(aeroplane){
             },100)
         },200)
         let move=setInterval(()=>{
-            aeroplane.position.x+=1
+            aeroplane.position.z-=1
             if(aeroplane.position.x>=600){
                 clearInterval(move)
                 clearInterval(back)
