@@ -5,18 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>AeroSimulate</title>
+    <title>飞行器电磁散射特性分析虚拟仿真实验</title>
     <script src="./js/babylon/babylonjs.min.js"></script>
     <script src="./js/babylon/babylonjs.gui.min.js"></script>
     <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
 
-    <script src="./js/frame/public.js"></script>    
-    <script src="./js/frame/firstScene.js"></script>
-    <script src="./js/frame/secondScene.js"></script>
-    <script src="./js/frame/thirdScene.js"></script>
-    <script src="./js/frame/forthScene_b.js"></script>
-    <script src="./js/frame/forthScene_d.js"></script>
-    <script src="./js/frame/simpleScene.js"></script>
+    <script src="./js/frame/ui.js"></script>
+    <script src="./js/frame/item.js"></script>
+    <script src="./js/frame/api.js"></script>
+
+    <script src="./js/frame/scene/simpleScene.js"></script>
+    <script src="./js/frame/scene/firstScene.js"></script>
+    <script src="./js/frame/scene/secondScene.js"></script>
+    <script src="./js/frame/scene/thirdScene.js"></script>
+    <script src="./js/frame/scene/forthScene_b.js"></script>
+    <script src="./js/frame/scene/forthScene_d.js"></script>
+
     <style>
         html,
         body {
@@ -41,19 +45,19 @@
 
 <script>
     var canvas = document.getElementById("renderCanvas");
-    const clientWidth=canvas.clientWidth
-    const clientHeight=canvas.clientHeight
+    const clientWidth = canvas.clientWidth
+    const clientHeight = canvas.clientHeight
 
     var engine = new BABYLON.Engine(canvas, true, {
         preserveDrawingBuffer: true,
         stencil: true
     });
-    engine.loadingUIText="加载中"
+    engine.loadingUIText = "加载中"
 
     // var scene=forthScene_b()
-    var scene=simpleScene()
+    var scene = simpleScene()
 
-    BABYLON.SceneLoader.ShowLoadingScreen=true
+    BABYLON.SceneLoader.ShowLoadingScreen = true
 
     engine.runRenderLoop(function () {
         if (scene) {

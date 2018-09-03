@@ -1,9 +1,9 @@
-var simpleScene=function(){
+var simpleScene = function () {
     let scene = new BABYLON.Scene(engine);
     setLight(scene)
-    setCamera(scene)
-    let ground=frameGround(scene)
-    vr(scene,ground)
+    let camera = setCamera(scene)
+    let ground = frameGround(scene)
+    vr(scene, ground)
 
 
     addBackButton("test")
@@ -13,7 +13,7 @@ var simpleScene=function(){
         console.log("error while loading " + task.name);
     }
 
-    addF117(assetsManager,new BABYLON.Vector3(0.8,0.8,0.8),30,0)
+    addF117(assetsManager, new BABYLON.Vector3(0.8, 0.8, 0.8), 30, 0)
 
     engine.loadingUIBackgroundColor = "Black";
     assetsManager.load();
@@ -24,7 +24,7 @@ var simpleScene=function(){
     }
 
 
-	return scene;
+    return scene;
 }
 
 function createPanel() {
@@ -46,8 +46,8 @@ function createPanel() {
 
     var panel = new BABYLON.GUI.StackPanel();
     panel.top = "100px";
-    panel.background="white"
-    panel.alpha=0.8
+    panel.background = "white"
+    panel.alpha = 0.8
     advancedTexture.addControl(panel);
 
     var button1 = BABYLON.GUI.Button.CreateSimpleButton("but1", "开始实验");
@@ -57,36 +57,36 @@ function createPanel() {
     button1.fontSize = 50;
     button1.background = "orange";
     panel.addControl(button1);
-    button1.onPointerClickObservable.add(() => {
-        switch (next) {
-            case columns[0]:
-                scene.dispose()
-                scene = firstScene()
-                break
-            case columns[1]:
-                scene.dispose()        
-                scene = secondScene()
-                break
-            case columns[2]:
-                scene.dispose()            
-                scene = thirdScene()
-                break
-            case columns[3]:
-                scene.dispose()
-                scene = forthScene_d()
-                break
-            default:
-                textblock.text = "请先选中实验再开始"
-        }
-    })
+    // button1.onPointerClickObservable.add(() => {
+    //     switch (next) {
+    //         case columns[0]:
+    //             scene.dispose()
+    //             scene = firstScene()
+    //             break
+    //         case columns[1]:
+    //             scene.dispose()
+    //             scene = secondScene()
+    //             break
+    //         case columns[2]:
+    //             scene.dispose()
+    //             scene = thirdScene()
+    //             break
+    //         case columns[3]:
+    //             scene.dispose()
+    //             scene = forthScene_d()
+    //             break
+    //         default:
+    //             textblock.text = "请先选中实验再开始"
+    //     }
+    // })
 
-    var textblock = new BABYLON.GUI.TextBlock();
-    textblock.height = "150px";
-    textblock.fontSize = 70;
-    textblock.text = "请选择一个实验:";
-    textblock.color="black"
-    textblock.alpha=0.7
-    panel.addControl(textblock);
+    // var textblock = new BABYLON.GUI.TextBlock();
+    // textblock.height = "150px";
+    // textblock.fontSize = 70;
+    // textblock.text = "请选择一个实验:";
+    // textblock.color = "black"
+    // textblock.alpha = 0.7
+    // panel.addControl(textblock);
 
     var addRadio = function (text, parent) {
         var button = new BABYLON.GUI.RadioButton();
@@ -97,8 +97,11 @@ function createPanel() {
 
         button.onIsCheckedChangedObservable.add(function (state) {
             if (state) {
-                textblock.text = "已选中：" + text;
-                next = text
+                // switc(text) {
+                //     case columns[0]:
+                //         scene.dispose()
+                //         scene = firstScene()
+                // }
             }
         });
 
@@ -107,8 +110,8 @@ function createPanel() {
             controlFirst: true
         });
         header.height = "150px";
-        header.color="black"
-        header.alpha=0.7
+        header.color = "black"
+        header.alpha = 0.7
         header.children[1].fontSize = 40;
         header.children[1].onPointerDownObservable.add(function () {
             button.isChecked = !button.isChecked;
@@ -122,4 +125,3 @@ function createPanel() {
     });
     return panel.mesh
 }
-
