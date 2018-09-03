@@ -57,3 +57,30 @@ function getMeshByState(state) {
     })
     return item
 }
+
+function indexItem(origin,value){
+    index=0
+    for(index=0;index<origin.length;index++){
+        if(origin[index]==value)
+            return index
+    }
+    return -1
+}
+
+function transformVertical(commond){
+    if(commond=="top")
+        return  BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP
+    else if(commond=="center")
+        return  BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER
+    else
+        return  BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM
+}
+
+function transformHorizontal(commond){
+    if(commond=="left")
+        return  BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
+    else if(commond=="center")
+        return  BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER
+    else
+        return  BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT
+}

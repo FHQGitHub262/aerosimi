@@ -48,6 +48,27 @@ function addBackButton(title) {
     header.paddingLeft = "100px";
     header.paddingTop = "10px";
     advancedTexture.addControl(header)
+
+    let logo = new BABYLON.GUI.Image("logo", "textures/logo.png");
+    logo.stretch=BABYLON.GUI.Image.STRETCH_NONE
+    logo.verticalAlignment=BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM
+    logo.horizontalAlignment=BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
+    logo.height = "60px";
+    logo.width="240px"
+    advancedTexture.addControl(logo);    
+
+    let lab=new BABYLON.GUI.TextBlock()
+    lab.text="国家级\n电工电子示范中心"
+    lab.fontFamily="sans serf"
+    lab.fontColor = new BABYLON.Color3(42/255,104/255,222/255);
+    lab.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    lab.textVerticalAlignment=transformVertical("bottom")
+    lab.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+    lab.paddingLeft = "260px";
+    lab.top = "-10px";
+    lab.lineSpacing="2px"
+    advancedTexture.addControl(lab)
+
 }
 
 function addVideo(type = "side", url = getVideoUrl()) {
@@ -103,4 +124,207 @@ function addPicture(type = "side", url = getPictureUrl()) {
     screen.material = mat;
     addCloseButton(screen)
     return screen
+}
+
+function Button(text,onButtonClick=()=>{
+    console.log("click")
+},onButtonHover=()=>{
+    console.log("hover")
+},height="100px",width=1,color="white",background="orange",fontSize=50){
+    let button = BABYLON.GUI.Button.CreateSimpleButton(text, text);
+    button.width = width;
+    button.height = height
+    button.color = color;
+    button.fontSize = fontSize
+    button.background = background;
+    button.onPointerClickObservable.add(onButtonClick)
+    button.onPointerMoveObservable.add(onButtonHover)
+    return button
+}
+
+function Button_s(text,onButtonClick=()=>{
+    console.log("click")
+},onButtonHover=()=>{
+    console.log("hover")
+},height="100px",width=1,color="white",background="orange",fontSize=50,){
+    let button = BABYLON.GUI.Button.CreateSimpleButton(text, text);
+    button.width = "200px";
+    button.height = "40px"
+    button.color = color;
+    button.fontSize = 20
+    button.background = background;
+    button.onPointerClickObservable.add(onButtonClick)
+    button.onPointerMoveObservable.add(onButtonHover)
+    return button
+}
+
+function TextBlock(text,fontSize=70,height="150px"){
+    var textblock = new BABYLON.GUI.TextBlock();
+    textblock.height = height;
+    textblock.fontSize = fontSize;
+    textblock.text = text;
+    textblock.color = "black"
+    textblock.alpha = 0.7
+    return textblock
+}
+
+function RatioButton(size="40px"){
+    let button = new BABYLON.GUI.RadioButton();
+    button.width = size;
+    button.height = size;
+    button.color = "white";
+    button.background = "orange";
+    return button
+}
+
+function Ratio(text,height="150px",width="400px",fontsize=40,size="40px",callback=(value)=>{
+    console.log(value)
+}){
+    let button = RatioButton(size)
+    button.onIsCheckedChangedObservable.add((state)=>{
+        if(state){
+            callback(text)
+        }
+    })
+    let header = BABYLON.GUI.Control.AddHeader(button, text, width, {
+        isHorizontal: true,
+        controlFirst: true
+    });
+    header.height = height;
+    header.color = "black"
+    header.alpha = 0.7
+    header.children[1].fontSize = fontsize;
+    header.children[1].onPointerDownObservable.add(()=>{
+        button.isChecked = !button.isChecked;
+    });
+    return header
+}
+
+// button在上方
+function upFormitem(columns,title,onRatioClick=(value)=>{
+    console.log(value)
+},onButtonClick=()=>{
+    console.log("click")
+}){
+    let panel = new BABYLON.GUI.StackPanel();
+    panel.top = "100px";
+    panel.background = "white"
+    panel.alpha = 0.8
+    
+    panel.addControl(Button(title,onButtonClick=onButtonClick))
+
+    columns.forEach((element)=>{
+        panel.addControl(Ratio(element,height="150px",width="400px",fontsize=40,size="40px",onRatioClick))
+    })
+    return panel
+}
+
+// button在下方
+function downFormitem(columns,title,subtitle,onRatioClick=(value)=>{
+    console.log(value)
+},onButtonClick=()=>{
+    console.log("click")
+}){
+    let panel = new BABYLON.GUI.StackPanel();
+    panel.top = "100px";
+    panel.background = "white"
+    panel.alpha = 0.8
+    
+    let textblock=TextBlock(subtitle)
+    panel.addControl(textblock)
+
+    columns.forEach((element)=>{
+        panel.addControl(Ratio(element,(value)=>{
+            onRatioClick()
+            textblock.text=`已选择：${value}`
+        }))
+    })
+
+    panel.addControl(Button(title,onButtonClick=onButtonClick))
+    return panel
+}
+
+function downFormitem_s(columns,title,subtitle,left,top,horizontal,vertical,onRatioClick=(value)=>{
+    console.log(value)
+},onButtonClick=(value)=>{
+    console.log("click")
+}){
+    let panel = new BABYLON.GUI.StackPanel();
+    panel.width="200px"
+    panel.height="250px"
+    panel.horizontalAlignment = transformHorizontal(horizontal);
+    panel.verticalAlignment = transformVertical(vertical)
+    panel.background="white"
+    panel.alpha=0.8
+    panel.top=top
+    panel.left=left
+    
+    let textblock=TextBlock(subtitle,25,"40px")
+    panel.addControl(textblock)
+
+    columns.forEach((element)=>{
+        panel.addControl(Ratio(element,height="75px","100px",fontsize=20,size="20px",(value)=>{
+            onRatioClick(value)
+            textblock.text=`已选择：${value}`
+        }))
+    })
+
+    panel.addControl(Button_s(title,onButtonClick=onButtonClick))
+    return panel
+}
+
+// 没有button
+function pureFormitem(columns,subtitle,left,top,horizontal,vertical,onRatioClick=(value)=>{
+    console.log(value)
+},onButtonClick=()=>{
+    console.log("click")
+}){
+    let panel = new BABYLON.GUI.StackPanel();
+    panel.width="200px"
+    panel.height="200px"
+    panel.horizontalAlignment = transformHorizontal(horizontal);
+    panel.verticalAlignment = transformVertical(vertical)
+    panel.background="white"
+    panel.alpha=0.8
+    panel.top=top
+    panel.left=left
+
+    let textblock=TextBlock(subtitle,25,"40px")
+    panel.addControl(textblock)
+
+    columns.forEach((element)=>{
+        panel.addControl(Ratio(element,height="75px","100px",fontsize=20,size="20px",(value)=>{
+            onRatioClick(value)
+            textblock.text=`已选择：${value}`
+        }))
+    })
+    return panel
+}
+
+//角落里的pureformitem，极小
+function miniFormitem(columns,subtitle,left,top,horizontal,vertical,onRatioClick=(value)=>{
+    console.log(value)
+},onButtonClick=()=>{
+    console.log("click")
+}){
+    let panel = new BABYLON.GUI.StackPanel();
+    panel.width="150px"
+    panel.height="100px"
+    panel.horizontalAlignment = transformHorizontal(horizontal);
+    panel.verticalAlignment = transformVertical(vertical)
+    panel.background="white"
+    panel.alpha=0.6
+    panel.top=top
+    panel.left=left
+
+    let textblock=TextBlock(subtitle,20,"30px")
+    panel.addControl(textblock)
+
+    columns.forEach((element)=>{
+        panel.addControl(Ratio(element,height="35px","100px",fontsize=15,size="15px",(value)=>{
+            onRatioClick(value)
+            textblock.text=`已选择：${value}`
+        }))
+    })
+    return panel
 }
