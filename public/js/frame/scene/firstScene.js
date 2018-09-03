@@ -53,9 +53,9 @@ function addRadarPanel() {
     plane_r.billboardMode=2
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane_r);
 
-    let panel=downFormitem(columns,"开始实验","设定雷达参数",onRatioClick=(value)=>{
+    let panel=downFormitem(columns,title="开始实验",subtitle="设定雷达参数",onRatioClick=(value)=>{
         if(value==columns[0])
-            frequency=2
+            frequency="433MHz"
         else
             frequency=0.7    
     },onButtonClick=()=>{

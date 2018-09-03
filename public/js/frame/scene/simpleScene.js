@@ -29,10 +29,10 @@ var simpleScene = function () {
 
 function createPanel(){
     let columns=[
-        "电磁辐射",
+        "微波雷达信号辐射规律",
         "表面电场分布（频率）",
         "表面电场分布（时间）",
-        "RCS测量"
+        "雷达横截面测量"
     ]
     let plane=BABYLON.Mesh.CreatePlane("plane",20)
     plane.position.y=3
@@ -41,7 +41,7 @@ function createPanel(){
 
     let advancedTexture=BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane)
 
-    let Form=upFormitem(columns,"电磁特性实验",onRadtioClick=(value)=>{
+    let Form=upFormitem(columns,"飞行器电磁散射特性分析",onRadtioClick=(value)=>{
         let frames=[
             firstScene,
             secondScene,

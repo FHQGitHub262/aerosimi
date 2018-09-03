@@ -102,23 +102,35 @@ function addVideo(type = "side", url = getVideoUrl()) {
 }
 
 function addPicture(type = "side", url = getPictureUrl()) {
+    let scaling=3
     var screen = BABYLON.MeshBuilder.CreatePlane("screen", {
-        height: 90 / 3,
-        width: 160 / 3
+        height: 90 / scaling,
+        width: 160 / scaling
     }, scene)
     screen.billboardMode = 7
     screen.scaling = new BABYLON.Vector3(2, 2, 2)
     if (type == "front") {
         screen.position.y = 80
-        screen.position.x = 0
+        screen.position.x = 50
         screen.position.z = -300
         // screen.rotation.x=0.5
     } else if (type == "side") {
         screen.position.y = 80
         screen.position.x = 300
         screen.position.z = 0
-        // screen.rotation.x=0.5    
+        // screen.position.z=50
     }
+    // console.log(BABYLON.ActionManager)
+    // screen.actionManager = new BABYLON.ActionManager(scene);
+    // screen.actionManager.registerAction(
+    //     new BABYLON.InterpolateValueAction(
+    //         BABYLON.ActionManager.OnPickTrigger,
+    //         screen,
+    //         'position',
+    //         new BABYLON.Vector3(300,0,50),
+    //         1
+    //     )
+    // )        
     var mat = new BABYLON.StandardMaterial("mat", scene);
     mat.diffuseTexture = new BABYLON.Texture(url, scene);
     screen.material = mat;
@@ -193,6 +205,43 @@ function Ratio(text,height="150px",width="400px",fontsize=40,size="40px",callbac
     header.height = height;
     header.color = "black"
     header.alpha = 0.7
+    header.children[1].fontSize=36
+    header.children[1].onPointerMoveObservable.add(()=>{
+        header.children[1].fontSize=44
+    })
+    header.children[1].onPointerOutObservable.add(()=>{
+        header.children[1].fontSize=36        
+    })
+    header.children[1].fontSize = fontsize;
+    header.children[1].onPointerDownObservable.add(()=>{
+        button.isChecked = !button.isChecked;
+    });
+    return header
+}
+
+function Ratio_s(text,height="150px",width="400px",fontsize=40,size="40px",callback=(value)=>{
+    console.log(value)
+}){
+    let button = RatioButton(size)
+    button.onIsCheckedChangedObservable.add((state)=>{
+        if(state){
+            callback(text)
+        }
+    })
+    let header = BABYLON.GUI.Control.AddHeader(button, text, width, {
+        isHorizontal: true,
+        controlFirst: true
+    });
+    header.height = height;
+    header.color = "black"
+    header.alpha = 0.7
+    header.children[1].fontSize=20
+    header.children[1].onPointerMoveObservable.add(()=>{
+        header.children[1].fontSize=24
+    })
+    header.children[1].onPointerOutObservable.add(()=>{
+        header.children[1].fontSize=20        
+    })
     header.children[1].fontSize = fontsize;
     header.children[1].onPointerDownObservable.add(()=>{
         button.isChecked = !button.isChecked;
@@ -234,7 +283,7 @@ function downFormitem(columns,title,subtitle,onRatioClick=(value)=>{
     panel.addControl(textblock)
 
     columns.forEach((element)=>{
-        panel.addControl(Ratio(element,(value)=>{
+        panel.addControl(Ratio(element,height="150px",width="400px",fontsize=40,size="40px",(value)=>{
             onRatioClick()
             textblock.text=`已选择：${value}`
         }))
@@ -263,7 +312,7 @@ function downFormitem_s(columns,title,subtitle,left,top,horizontal,vertical,onRa
     panel.addControl(textblock)
 
     columns.forEach((element)=>{
-        panel.addControl(Ratio(element,height="75px","100px",fontsize=20,size="20px",(value)=>{
+        panel.addControl(Ratio_s(element,height="75px","100px",fontsize=20,size="20px",(value)=>{
             onRatioClick(value)
             textblock.text=`已选择：${value}`
         }))
@@ -293,7 +342,7 @@ function pureFormitem(columns,subtitle,left,top,horizontal,vertical,onRatioClick
     panel.addControl(textblock)
 
     columns.forEach((element)=>{
-        panel.addControl(Ratio(element,height="75px","100px",fontsize=20,size="20px",(value)=>{
+        panel.addControl(Ratio_s(element,height="75px","100px",fontsize=20,size="20px",(value)=>{
             onRatioClick(value)
             textblock.text=`已选择：${value}`
         }))
@@ -321,7 +370,7 @@ function miniFormitem(columns,subtitle,left,top,horizontal,vertical,onRatioClick
     panel.addControl(textblock)
 
     columns.forEach((element)=>{
-        panel.addControl(Ratio(element,height="35px","100px",fontsize=15,size="15px",(value)=>{
+        panel.addControl(Ratio_s(element,height="35px","100px",fontsize=15,size="15px",(value)=>{
             onRatioClick(value)
             textblock.text=`已选择：${value}`
         }))

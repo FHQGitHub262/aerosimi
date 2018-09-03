@@ -103,7 +103,7 @@ function addRCSPanel_d(scene_t,aeroplane) {
                 }
                 setTimeout(()=>{
                     video=addVideo("side")
-                },3000)
+                },4000)
             })
         }else{
             console.log(aeroplane,wave,type)

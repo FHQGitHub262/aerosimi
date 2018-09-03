@@ -103,7 +103,7 @@ function addRCSPanel_b(scene_t,aeroplane) {
                 }
                 setTimeout(()=>{
                     video=addVideo("side")
-                },3000)
+                },4000)
             })
         }else{
             console.log(aeroplane,wave,type)
@@ -147,7 +147,7 @@ function addRCSPanel_b(scene_t,aeroplane) {
     let advancedTexture_l2 = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("model");
 
     let panel_l2=miniFormitem(columns_l2,"选择模式",-30,10,"right","top",onRatioClick=(value)=>{
-        if(element=="单雷达"){
+        if(value=="单雷达"){
             scene.dispose()
             scene=forthScene_b(aeroplane)
         }else{

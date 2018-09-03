@@ -30,6 +30,7 @@ function addF117(assetsManager, scaling = new BABYLON.Vector3(0.2, 0.2, 0.2), y 
         f117.position.y += y
         f117.position.x = 0
         f117.position.z = z
+        
         let mat = new BABYLON.StandardMaterial()
         mat.diffuseColor = new BABYLON.Color3(0.28, 0.3, 0.3);
         f117.scaling = scaling
@@ -41,11 +42,11 @@ function addF117(assetsManager, scaling = new BABYLON.Vector3(0.2, 0.2, 0.2), y 
 
 //api
 function getVideoUrl(plane, view) {
-    return "./video/video_1.mp4"
+    return "./video/f117/f117_front.mp4"
 }
 
 function getPictureUrl(plane, view) {
-    return "./textures/result/r1.jpg"
+    return "./textures/result/f117/f117_side.jpg"
 }
 
 function getMeshByState(state) {

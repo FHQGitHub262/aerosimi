@@ -22,6 +22,7 @@ var thirdScene = function (aeroplane="F117") {
             scene.render();
         });
     };
+    addPicture("side")
     if(aeroplane=="F117"){
         addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
         addF117(assetsManager)
@@ -98,7 +99,7 @@ function addTimePanel(scene_t,aeroplane) {
                 }
                 setTimeout(()=>{
                     video=addVideo("side")
-                },3000)
+                },4000)
             })
         }else{
             console.log(aeroplane,wave,type)
