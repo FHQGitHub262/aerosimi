@@ -24,13 +24,13 @@ function addA380(assetsManager) {
 }
 
 function addF117(assetsManager, scaling = new BABYLON.Vector3(0.2, 0.2, 0.2), y = 100, z = 300) {
-    var meshTask = assetsManager.addMeshTask("f117", "", "/mesh/f117/", "f117.obj");
+    var meshTask = assetsManager.addMeshTask("f117", "", "https://aerosimi-1253417793.cos.ap-shanghai.myqcloud.com/mesh/f117/", "f117.obj");
     meshTask.onSuccess = function (task) {
         let f117 = BABYLON.Mesh.MergeMeshes(task.loadedMeshes, true, true)
         f117.position.y += y
         f117.position.x = 0
         f117.position.z = z
-        
+
         let mat = new BABYLON.StandardMaterial()
         mat.diffuseColor = new BABYLON.Color3(0.28, 0.3, 0.3);
         f117.scaling = scaling
@@ -59,29 +59,29 @@ function getMeshByState(state) {
     return item
 }
 
-function indexItem(origin,value){
-    index=0
-    for(index=0;index<origin.length;index++){
-        if(origin[index]==value)
+function indexItem(origin, value) {
+    index = 0
+    for (index = 0; index < origin.length; index++) {
+        if (origin[index] == value)
             return index
     }
     return -1
 }
 
-function transformVertical(commond){
-    if(commond=="top")
-        return  BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP
-    else if(commond=="center")
-        return  BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER
+function transformVertical(commond) {
+    if (commond == "top")
+        return BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP
+    else if (commond == "center")
+        return BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER
     else
-        return  BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM
+        return BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM
 }
 
-function transformHorizontal(commond){
-    if(commond=="left")
-        return  BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
-    else if(commond=="center")
-        return  BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER
+function transformHorizontal(commond) {
+    if (commond == "left")
+        return BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
+    else if (commond == "center")
+        return BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER
     else
-        return  BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT
+        return BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT
 }
