@@ -1,6 +1,6 @@
 //add mesh
 function addRadar(assetsManager, position, rotation = 0.7) {
-    var meshTask = assetsManager.addMeshTask("radar", "", "/mesh/radar/", "rada.obj");
+    var meshTask = assetsManager.addMeshTask("radar", "", "https://aerosimi-1253417793.cos.ap-shanghai.myqcloud.com/mesh/radar/ ", "rada.obj");
     meshTask.onSuccess = function (task) {
         let radar = BABYLON.Mesh.MergeMeshes(task.loadedMeshes, true, true)
         radar.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1)
@@ -11,7 +11,7 @@ function addRadar(assetsManager, position, rotation = 0.7) {
 }
 
 function addA380(assetsManager) {
-    var meshTask = assetsManager.addMeshTask("a380", "", "./mesh/a380/", "a380.obj");
+    var meshTask = assetsManager.addMeshTask("a380", "", "https://aerosimi-1253417793.cos.ap-shanghai.myqcloud.com/mesh/a380/", "a380.obj");
     meshTask.onSuccess = function (task) {
         let a380 = BABYLON.Mesh.MergeMeshes(task.loadedMeshes, true, true)
         a380.scaling = new BABYLON.Vector3(0.00175, 0.00175, 0.00175)
