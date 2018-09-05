@@ -58,7 +58,7 @@ function addRCSPanel_b(scene_t,aeroplane) {
     ]
     // aero_type
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_r");
-    let panel=pureFormitem(columns,"飞行器类型",30,60,"left","top",onRatioClick=(aero)=>{
+    let panel=miniFormitem(columns,"飞行器类型",30,60,"left","top",onRatioClick=(aero)=>{
         if(aero=="F117"){
             scene.dispose()
             scene=forthScene_b("F117")
@@ -71,7 +71,7 @@ function addRCSPanel_b(scene_t,aeroplane) {
 
     // radar_type
     var advancedTexture_l = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_l");
-    let panel_l=downFormitem_s(columns_radar,"开始实验","雷达类型",30,540,"left","top",onRatioClick=(frequency)=>{
+    let panel_l=downFormitem_s(columns_radar,"开始实验","雷达类型",30,300,"left","top",onRatioClick=(frequency)=>{
         if(frequency=="433MHz"){
             if(wave!=""){
                 clearInterval(wave)
@@ -117,7 +117,7 @@ function addRCSPanel_b(scene_t,aeroplane) {
     advancedTexture_l.addControl(panel_l)
 
     // view_type
-    let panel_r2=pureFormitem(columns_l,"选择角度",30,300,"left","top",onRatioClick=(towards)=>{
+    let panel_r2=miniFormitem(columns_l,"选择角度",30,180,"left","top",onRatioClick=(towards)=>{
         if(towards=="正视图"){
             type="front"
             scene.meshes.forEach((element)=>{

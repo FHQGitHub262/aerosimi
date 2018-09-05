@@ -72,6 +72,72 @@ function addBackButton(title) {
 
 }
 
+function addVideo(type = "side", url = getVideoUrl()) {
+    var screen = BABYLON.MeshBuilder.CreatePlane("screen", {
+        height: 90 / 3,
+        width: 160 / 3
+    }, scene)
+    screen.billboardMode = 7
+    screen.scaling = new BABYLON.Vector3(2, 2, 2)
+    if (type == "front") {
+        screen.position.y = 80
+        screen.position.x = 0
+        screen.position.z = -300
+    } else if (type == "side") {
+        screen.position.y = 80
+        screen.position.x = 300
+        screen.position.z = 0
+    }
+    var mat = new BABYLON.StandardMaterial("mat", scene);
+
+    var videoTexture = new BABYLON.VideoTexture("video", [url], scene, true, false);
+    videoTexture.invertZ = false
+
+    mat.diffuseTexture = videoTexture;
+    screen.material = mat;
+    videoTexture.video.play();
+
+    addCloseButton(screen)
+
+    return screen
+}
+
+function addPicture(type = "side", url = getPictureUrl()) {
+    let scaling=3
+    var screen = BABYLON.MeshBuilder.CreatePlane("screen", {
+        height: 90 / scaling,
+        width: 160 / scaling
+    }, scene)
+    screen.billboardMode = 7
+    screen.scaling = new BABYLON.Vector3(2, 2, 2)
+    if (type == "front") {
+        screen.position.y = 80
+        screen.position.x = 50
+        screen.position.z = -300
+        // screen.rotation.x=0.5
+    } else if (type == "side") {
+        screen.position.y = 80
+        screen.position.x = 300
+        screen.position.z = 0
+        // screen.position.z=50
+    }
+    // console.log(BABYLON.ActionManager)
+    // screen.actionManager = new BABYLON.ActionManager(scene);
+    // screen.actionManager.registerAction(
+    //     new BABYLON.InterpolateValueAction(
+    //         BABYLON.ActionManager.OnPickTrigger,
+    //         screen,
+    //         'position',
+    //         new BABYLON.Vector3(300,0,50),
+    //         1
+    //     )
+    // )        
+    var mat = new BABYLON.StandardMaterial("mat", scene);
+    mat.diffuseTexture = new BABYLON.Texture(url, scene);
+    screen.material = mat;
+    addCloseButton(screen)
+    return screen
+}
 
 function Button(text,onButtonClick=()=>{
     console.log("click")
@@ -234,8 +300,8 @@ function downFormitem_s(columns,title,subtitle,left,top,horizontal,vertical,onRa
     console.log("click")
 }){
     let panel = new BABYLON.GUI.StackPanel();
-    panel.width="200px"
-    panel.height="250px"
+    panel.width="150px"
+    panel.height="140px"
     panel.horizontalAlignment = transformHorizontal(horizontal);
     panel.verticalAlignment = transformVertical(vertical)
     panel.background="white"
@@ -243,11 +309,11 @@ function downFormitem_s(columns,title,subtitle,left,top,horizontal,vertical,onRa
     panel.top=top
     panel.left=left
     
-    let textblock=TextBlock(subtitle,25,"40px")
+    let textblock=TextBlock(subtitle,20,"30px")
     panel.addControl(textblock)
 
     columns.forEach((element)=>{
-        panel.addControl(Ratio_s(element,height="75px","100px",fontsize=20,size="20px",(value)=>{
+        panel.addControl(Ratio_s(element,height="35px","100px",fontsize=15,size="15px",(value)=>{
             onRatioClick(value)
             textblock.text=`已选择：${value}`
         }))
@@ -297,7 +363,7 @@ function miniFormitem(columns,subtitle,left,top,horizontal,vertical,onRatioClick
     panel.horizontalAlignment = transformHorizontal(horizontal);
     panel.verticalAlignment = transformVertical(vertical)
     panel.background="white"
-    panel.alpha=0.6
+    panel.alpha=0.8
     panel.top=top
     panel.left=left
 
@@ -311,64 +377,4 @@ function miniFormitem(columns,subtitle,left,top,horizontal,vertical,onRatioClick
         }))
     })
     return panel
-}
-
-function addVideo(exp,aeroplane,radar,view) {
-    let url=getVideoUrl(exp,aeroplane,radar,view)
-    let type="side"
-    var screen = BABYLON.MeshBuilder.CreatePlane("screen", {
-        height: 90 / 3,
-        width: 160 / 3
-    }, scene)
-    screen.billboardMode = 7
-    screen.scaling = new BABYLON.Vector3(2, 2, 2)
-    if (type == "front") {
-        screen.position.y = 80
-        screen.position.x = 0
-        screen.position.z = -300
-    } else if (type == "side") {
-        screen.position.y = 80
-        screen.position.x = 300
-        screen.position.z = 0
-    }
-    var mat = new BABYLON.StandardMaterial("mat", scene);
-
-    var videoTexture = new BABYLON.VideoTexture("video", [url], scene, true, false);
-    videoTexture.invertZ = false
-
-    mat.diffuseTexture = videoTexture;
-    screen.material = mat;
-    videoTexture.video.play();
-
-    addCloseButton(screen)
-
-    return screen
-}
-
-function addPicture(exp,aeroplane,radar,view) {
-    let url=getPictureUrl(exp,aeroplane,radar,view)
-    let type="side"
-    let scaling=3
-    var screen = BABYLON.MeshBuilder.CreatePlane("screen", {
-        height: 90 / scaling,
-        width: 160 / scaling
-    }, scene)
-    screen.billboardMode = 7
-    screen.scaling = new BABYLON.Vector3(2, 2, 2)
-    if (type == "front") {
-        screen.position.y = 80
-        screen.position.x = 50
-        screen.position.z = -300
-        // screen.rotation.x=0.5
-    } else if (type == "side") {
-        screen.position.y = 80
-        screen.position.x = 300
-        screen.position.z = 0
-        // screen.position.z=50
-    }
-    var mat = new BABYLON.StandardMaterial("mat", scene);
-    mat.diffuseTexture = new BABYLON.Texture(url, scene);
-    screen.material = mat;
-    addCloseButton(screen)
-    return screen
 }
