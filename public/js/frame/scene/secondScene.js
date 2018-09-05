@@ -38,7 +38,7 @@ var secondScene = function (aeroplane="F117") {
 // -----------------------------------------
 function addFrequencePanel(scene_t,aeroplane) {
     wave=""
-
+    radar=""
     let columns = [
         "F117",
         "A380"
@@ -67,13 +67,15 @@ function addFrequencePanel(scene_t,aeroplane) {
 
     // radar_type
     var advancedTexture_l = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_l");
-    let panel_l=downFormitem_s(columns_radar,"开始实验","雷达类型",30,-250,"left","bottom",onRatioClick=(frequency)=>{
+    let panel_l=downFormitem_s(columns_radar,"开始实验","雷达类型",30,540,"left","top",onRatioClick=(frequency)=>{
         if(frequency=="433MHz"){
             if(wave!=""){
                 clearInterval(wave)
                 wave=createRadarSphere(scene,2,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+                radar="433MHz"
             }else{
                 wave=createRadarSphere(scene,2,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+                radar="433MHz"
             }
             setTimeout(()=>{
                 clearInterval(wave)
@@ -83,8 +85,10 @@ function addFrequencePanel(scene_t,aeroplane) {
             if(wave!=""){
                 clearInterval(wave)
                 wave=createRadarSphere(scene,0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+                radar="2.4GHz"
             }else{
                 wave=createRadarSphere(scene,0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+                radar="2.4GHz"
             }
             setTimeout(()=>{
                 clearInterval(wave)
@@ -98,7 +102,7 @@ function addFrequencePanel(scene_t,aeroplane) {
                     aerofly_2(element)
                 }
                 setTimeout(()=>{
-                    video=addPicture("side")
+                    video=addPicture("exp_2",aeroplane,radar,type,"side")
                 },3000)
             })
         }else{
@@ -109,7 +113,7 @@ function addFrequencePanel(scene_t,aeroplane) {
     advancedTexture_l.addControl(panel_l)
 
     // view_type
-    let panel_r2=pureFormitem(columns_l,"选择角度",30,-120,"left","center",onRatioClick=(towards)=>{
+    let panel_r2=pureFormitem(columns_l,"选择角度",30,300,"left","top",onRatioClick=(towards)=>{
         if(towards=="正视图"){
             type="front"
             scene.meshes.forEach((element)=>{
