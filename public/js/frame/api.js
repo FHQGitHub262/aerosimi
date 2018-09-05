@@ -1,6 +1,8 @@
 //add mesh
+source="https://aerosimi-1253417793.cos.ap-shanghai.myqcloud.com"
+// source=""
 function addRadar(assetsManager, position, rotation = 0.7) {
-    var meshTask = assetsManager.addMeshTask("radar", "", "https://aerosimi-1253417793.cos.ap-shanghai.myqcloud.com/mesh/radar/ ", "rada.obj");
+    var meshTask = assetsManager.addMeshTask("radar", "", `${source}/mesh/radar/`, "rada.obj");
     meshTask.onSuccess = function (task) {
         let radar = BABYLON.Mesh.MergeMeshes(task.loadedMeshes, true, true)
         radar.scaling = new BABYLON.Vector3(0.1, 0.1, 0.1)
@@ -11,7 +13,7 @@ function addRadar(assetsManager, position, rotation = 0.7) {
 }
 
 function addA380(assetsManager) {
-    var meshTask = assetsManager.addMeshTask("a380", "", "https://aerosimi-1253417793.cos.ap-shanghai.myqcloud.com/mesh/a380/", "a380.obj");
+    var meshTask = assetsManager.addMeshTask("a380", "", `${source}/mesh/a380/`, "a380.obj");
     meshTask.onSuccess = function (task) {
         let a380 = BABYLON.Mesh.MergeMeshes(task.loadedMeshes, true, true)
         a380.scaling = new BABYLON.Vector3(0.00175, 0.00175, 0.00175)
@@ -24,7 +26,7 @@ function addA380(assetsManager) {
 }
 
 function addF117(assetsManager, scaling = new BABYLON.Vector3(0.2, 0.2, 0.2), y = 100, z = 300) {
-    var meshTask = assetsManager.addMeshTask("f117", "", "https://aerosimi-1253417793.cos.ap-shanghai.myqcloud.com/mesh/f117/", "f117.obj");
+    var meshTask = assetsManager.addMeshTask("f117", "", `${source}/mesh/f117/`, "f117.obj");
     meshTask.onSuccess = function (task) {
         let f117 = BABYLON.Mesh.MergeMeshes(task.loadedMeshes, true, true)
         f117.position.y += y
@@ -41,12 +43,12 @@ function addF117(assetsManager, scaling = new BABYLON.Vector3(0.2, 0.2, 0.2), y 
 }
 
 //api
-function getVideoUrl(plane, view) {
-    return "./video/f117/f117_front.mp4"
+function getVideoUrl(exp,plane,radar,view) {
+    return `./result/${exp}/${plane}/${radar}/${view}.mp4`
 }
 
-function getPictureUrl(plane, view) {
-    return "./textures/result/f117/f117_side.jpg"
+function getPictureUrl(exp,plane,radar,view) {
+    return `./result/${exp}/${plane}/${radar}/${view}.jpg`
 }
 
 function getMeshByState(state) {

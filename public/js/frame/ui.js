@@ -58,9 +58,10 @@ function addBackButton(title) {
     advancedTexture.addControl(logo);    
 
     let lab=new BABYLON.GUI.TextBlock()
-    lab.text="国家级\n电工电子示范中心"
+    lab.text="国家级实验教学示范中心\n国家级虚拟仿真实验教学中心"
     lab.fontFamily="sans serf"
-    lab.fontColor = new BABYLON.Color3(42/255,104/255,222/255);
+    // lab.fontColor = new BABYLON.Color3(42/255,104/255,222/255);
+    lab.color="darkblue"
     lab.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     lab.textVerticalAlignment=transformVertical("bottom")
     lab.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
@@ -71,72 +72,6 @@ function addBackButton(title) {
 
 }
 
-function addVideo(type = "side", url = getVideoUrl()) {
-    var screen = BABYLON.MeshBuilder.CreatePlane("screen", {
-        height: 90 / 3,
-        width: 160 / 3
-    }, scene)
-    screen.billboardMode = 7
-    screen.scaling = new BABYLON.Vector3(2, 2, 2)
-    if (type == "front") {
-        screen.position.y = 80
-        screen.position.x = 0
-        screen.position.z = -300
-    } else if (type == "side") {
-        screen.position.y = 80
-        screen.position.x = 300
-        screen.position.z = 0
-    }
-    var mat = new BABYLON.StandardMaterial("mat", scene);
-
-    var videoTexture = new BABYLON.VideoTexture("video", [url], scene, true, false);
-    videoTexture.invertZ = false
-
-    mat.diffuseTexture = videoTexture;
-    screen.material = mat;
-    videoTexture.video.play();
-
-    addCloseButton(screen)
-
-    return screen
-}
-
-function addPicture(type = "side", url = getPictureUrl()) {
-    let scaling=3
-    var screen = BABYLON.MeshBuilder.CreatePlane("screen", {
-        height: 90 / scaling,
-        width: 160 / scaling
-    }, scene)
-    screen.billboardMode = 7
-    screen.scaling = new BABYLON.Vector3(2, 2, 2)
-    if (type == "front") {
-        screen.position.y = 80
-        screen.position.x = 50
-        screen.position.z = -300
-        // screen.rotation.x=0.5
-    } else if (type == "side") {
-        screen.position.y = 80
-        screen.position.x = 300
-        screen.position.z = 0
-        // screen.position.z=50
-    }
-    // console.log(BABYLON.ActionManager)
-    // screen.actionManager = new BABYLON.ActionManager(scene);
-    // screen.actionManager.registerAction(
-    //     new BABYLON.InterpolateValueAction(
-    //         BABYLON.ActionManager.OnPickTrigger,
-    //         screen,
-    //         'position',
-    //         new BABYLON.Vector3(300,0,50),
-    //         1
-    //     )
-    // )        
-    var mat = new BABYLON.StandardMaterial("mat", scene);
-    mat.diffuseTexture = new BABYLON.Texture(url, scene);
-    screen.material = mat;
-    addCloseButton(screen)
-    return screen
-}
 
 function Button(text,onButtonClick=()=>{
     console.log("click")
@@ -376,4 +311,64 @@ function miniFormitem(columns,subtitle,left,top,horizontal,vertical,onRatioClick
         }))
     })
     return panel
+}
+
+function addVideo(exp,aeroplane,radar,view) {
+    let url=getVideoUrl(exp,aeroplane,radar,view)
+    let type="side"
+    var screen = BABYLON.MeshBuilder.CreatePlane("screen", {
+        height: 90 / 3,
+        width: 160 / 3
+    }, scene)
+    screen.billboardMode = 7
+    screen.scaling = new BABYLON.Vector3(2, 2, 2)
+    if (type == "front") {
+        screen.position.y = 80
+        screen.position.x = 0
+        screen.position.z = -300
+    } else if (type == "side") {
+        screen.position.y = 80
+        screen.position.x = 300
+        screen.position.z = 0
+    }
+    var mat = new BABYLON.StandardMaterial("mat", scene);
+
+    var videoTexture = new BABYLON.VideoTexture("video", [url], scene, true, false);
+    videoTexture.invertZ = false
+
+    mat.diffuseTexture = videoTexture;
+    screen.material = mat;
+    videoTexture.video.play();
+
+    addCloseButton(screen)
+
+    return screen
+}
+
+function addPicture(exp,aeroplane,radar,view) {
+    let url=getPictureUrl(exp,aeroplane,radar,view)
+    let type="side"
+    let scaling=3
+    var screen = BABYLON.MeshBuilder.CreatePlane("screen", {
+        height: 90 / scaling,
+        width: 160 / scaling
+    }, scene)
+    screen.billboardMode = 7
+    screen.scaling = new BABYLON.Vector3(2, 2, 2)
+    if (type == "front") {
+        screen.position.y = 80
+        screen.position.x = 50
+        screen.position.z = -300
+        // screen.rotation.x=0.5
+    } else if (type == "side") {
+        screen.position.y = 80
+        screen.position.x = 300
+        screen.position.z = 0
+        // screen.position.z=50
+    }
+    var mat = new BABYLON.StandardMaterial("mat", scene);
+    mat.diffuseTexture = new BABYLON.Texture(url, scene);
+    screen.material = mat;
+    addCloseButton(screen)
+    return screen
 }

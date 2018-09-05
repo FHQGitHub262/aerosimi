@@ -41,7 +41,7 @@ function createPanel(){
 
     let advancedTexture=BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane)
 
-    let Form=upFormitem(columns,"飞行器电磁散射特性分析",onRadtioClick=(value)=>{
+    let Form=upFormitem(columns,"飞行器电磁散射特性分析仿真软件",onRadtioClick=(value)=>{
         let frames=[
             firstScene,
             secondScene,
