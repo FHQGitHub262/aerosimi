@@ -32,7 +32,7 @@ function createPanel(){
         "微波雷达信号辐射规律",
         "表面电场分布（频率）",
         "表面电场分布（时间）",
-        "雷达横截面测量"
+        "RCS雷达散射截面测量"
     ]
     let plane=BABYLON.Mesh.CreatePlane("plane",20)
     plane.position.y=3
