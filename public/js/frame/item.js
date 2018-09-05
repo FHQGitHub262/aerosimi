@@ -6,7 +6,7 @@ function frameGround(scene) {
     var groundMaterial = new BABYLON.StandardMaterial("groundMaterial", scene);
     groundMaterial.diffuseTexture = groundTexture;
 
-    var ground = BABYLON.Mesh.CreateGround("ground", 4000, 4000, 1, scene, false);
+    var ground = BABYLON.Mesh.CreateGround("ground", 2000, 2000, 1, scene, false);
     ground.position.y = -10;
     ground.material = groundMaterial;
     return ground
@@ -65,9 +65,9 @@ function createBackSphere(scene, position, towards = new BABYLON.Vector3(257, 15
 
     let hoop = BABYLON.MeshBuilder.CreateTorus("hoop", {
         thickness: 0.1,
-        tessellation: 36
+        tessellation: 32
     }, scene);
-    hoop.scaling = new BABYLON.Vector3(5, 5, 5)
+    hoop.scaling = new BABYLON.Vector3(15, 15, 15)
     // hoop.position=towards
     hoop.position = position
     hoop.material = material_sphere
@@ -79,14 +79,13 @@ function createBackSphere(scene, position, towards = new BABYLON.Vector3(257, 15
     let move = setInterval(() => {
         hoop.lookAt(towards)
         hoop.rotation.x -= Math.PI * 0.5
-        hoop.movePOV(0, 15, 0)
+        hoop.movePOV(0, 5, 0)
         hoop.scaling.z += 0.25
         hoop.scaling.x += 0.25
-    }, 10)
-    setTimeout(() => {
-        hoop.dispose()
-        clearInterval(move)
-    }, 250)
+
+        if(hoop.position.y<=towards.y+50)
+            hoop.dispose()
+    }, 1)
 }
 
 function createRadarSphere(scene, frequence, position, rotation) {

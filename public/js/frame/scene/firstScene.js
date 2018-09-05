@@ -17,7 +17,7 @@ var firstScene = function () {
     var ground = frameGround(scene)
     addRadarPanel(assetsManager)
 
-    var tri_panel = addBackButton("电磁辐射")
+    var tri_panel = addBackButton("微波雷达信号辐射规律")
 
     scene.onPointerDown = function () {
         scene.onPointerDown = undefined

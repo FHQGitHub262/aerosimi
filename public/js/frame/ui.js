@@ -196,7 +196,7 @@ function upFormitem(columns,title,onRatioClick=(value)=>{
     panel.addControl(Button(title,onButtonClick=onButtonClick))
 
     columns.forEach((element)=>{
-        panel.addControl(Ratio(element,height="150px",width="400px",fontsize=40,size="40px",onRatioClick))
+        panel.addControl(Ratio(element,height="150px",width="450px",fontsize=40,size="40px",onRatioClick))
     })
     return panel
 }
@@ -319,7 +319,8 @@ function addVideo(exp,aeroplane,radar,view) {
         width: 160 / 3
     }, scene)
     screen.billboardMode = 7
-    screen.scaling = new BABYLON.Vector3(2, 2, 2)
+    screen.scaling = new BABYLON.Vector3(0.8, 0.8, 0.8)
+    // screen.scaling = new BABYLON.Vector3(2, 2, 2)
     if (type == "front") {
         screen.position.y = 80
         screen.position.x = 0
@@ -327,7 +328,8 @@ function addVideo(exp,aeroplane,radar,view) {
     } else if (type == "side") {
         screen.position.y = 80
         screen.position.x = 300
-        screen.position.z = 0
+        // screen.position.z = 0
+        screen.position.z=50
     }
     var mat = new BABYLON.StandardMaterial("mat", scene);
 
@@ -361,8 +363,8 @@ function addPicture(exp,aeroplane,radar,view) {
     } else if (type == "side") {
         screen.position.y = 80
         screen.position.x = 300
-        screen.position.z = 0
-        // screen.position.z=50
+        // screen.position.z = 0
+        screen.position.z=50
     }
     var mat = new BABYLON.StandardMaterial("mat", scene);
     mat.diffuseTexture = new BABYLON.Texture(url, scene);

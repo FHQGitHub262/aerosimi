@@ -70,40 +70,40 @@ function addFrequencePanel(scene_t,aeroplane) {
     let panel_l=downFormitem_s(columns_radar,"开始实验","雷达类型",30,300,"left","top",onRatioClick=(frequency)=>{
         if(frequency=="433MHz"){
             if(wave!=""){
-                clearInterval(wave)
-                wave=createRadarSphere(scene,2,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+                // clearInterval(wave)
+                // wave=createRadarSphere(scene,2,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
                 radar="433MHz"
             }else{
-                wave=createRadarSphere(scene,2,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+                // wave=createRadarSphere(scene,2,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
                 radar="433MHz"
             }
-            setTimeout(()=>{
-                clearInterval(wave)
-                wave=""
-            },5000)
+            // setTimeout(()=>{
+            //     clearInterval(wave)
+            //     wave=""
+            // },5000)
         }else if(frequency=="2.4GHz"){
             if(wave!=""){
-                clearInterval(wave)
-                wave=createRadarSphere(scene,0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+                // clearInterval(wave)
+                // wave=createRadarSphere(scene,0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
                 radar="2.4GHz"
             }else{
-                wave=createRadarSphere(scene,0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+                // wave=createRadarSphere(scene,0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
                 radar="2.4GHz"
             }
-            setTimeout(()=>{
-                clearInterval(wave)
-                wave=""
-            },5000)
+            // setTimeout(()=>{
+            //     clearInterval(wave)
+            //     wave=""
+            // },5000)
         }
     },onButtonClick=()=>{
-        if(aeroplane!=""&&wave!=""&&type!=""){
+        if(aeroplane!=""&&radar!=""&&type!=""){
             scene.meshes.forEach((element)=>{
                 if(element.state=="f117"||element.state=="a380"){
-                    aerofly_2(element)
+                    aerofly_2(element,radar)
                 }
                 setTimeout(()=>{
                     video=addPicture("exp_2",aeroplane,radar,type,"side")
-                },3000)
+                },7000)
             })
         }else{
             console.log(aeroplane,wave,type)
@@ -145,35 +145,42 @@ function addFrequencePanel(scene_t,aeroplane) {
     advancedTexture.addControl(panel_r2);
 }
 
-function aerofly_2(aeroplane){
+function aerofly_2(aeroplane,frequency){
     let temp_pos
     let radar=getMeshByState("radar")
-    console.log("fly",radar)
     radar=radar.position
+    let wave=createRadarSphere(scene,frequency=="433MHz"?2:0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
     if(aeroplane.position.z==0&&aeroplane.position.x<600){
         let back=0
         setTimeout(()=>{
                 back=setInterval(()=>{
                 temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
                 createBackSphere(scene,temp_pos,radar)
-            },100)
-        },200)
+            },200)
+        },500)
         let move=setInterval(()=>{
-            aeroplane.position.x+=1
+            aeroplane.position.x+=0.5
             if(aeroplane.position.x>=600){
                 clearInterval(move)
                 clearInterval(back)
+                clearInterval(wave)
             }
-        },5)
+        },1)
     }else if(aeroplane.position.x==0&&aeroplane.position.z>-600){
+        let back=0
+        setTimeout(()=>{
+                back=setInterval(()=>{
+                temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
+                createBackSphere(scene,temp_pos,radar)
+            },200)
+        },500)
         let move=setInterval(()=>{
-            aeroplane.position.z-=1
-            temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
-            temp_rot=new BABYLON.Vector3(radar.x-temp_pos.x,radar.y-temp_pos.y,radar.z-temp_pos.z)
-            createBackSphere(scene,temp_pos,radar)
+            aeroplane.position.z-=0.5
             if(aeroplane.position.z<=-600){
                 clearInterval(move)
+                clearInterval(back)
+                clearInterval(wave)
             }
-        },5)
+        },1)
     }
 }
