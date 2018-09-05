@@ -102,7 +102,7 @@ function addFrequencePanel(scene_t,aeroplane) {
                     aerofly_2(element,radar)
                 }
                 setTimeout(()=>{
-                    video=addPicture("exp_2",aeroplane,radar,type,"side")
+                    video=addPicture("exp_2",aeroplane,radar,type,x=300,y=80,z=40)
                 },7000)
             })
         }else{

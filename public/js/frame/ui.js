@@ -58,7 +58,7 @@ function addBackButton(title) {
     advancedTexture.addControl(logo);    
 
     let lab=new BABYLON.GUI.TextBlock()
-    lab.text="国家级实验教学示范中心\n国家级虚拟仿真实验教学中心"
+    lab.text="电工电子国家级实验教学示范中心\n电子信息技术国家级虚拟仿真实验教学中心"
     lab.fontFamily="sans serf"
     // lab.fontColor = new BABYLON.Color3(42/255,104/255,222/255);
     lab.color="darkblue"
@@ -319,7 +319,7 @@ function addVideo(exp,aeroplane,radar,view) {
         width: 160 / 3
     }, scene)
     screen.billboardMode = 7
-    screen.scaling = new BABYLON.Vector3(0.8, 0.8, 0.8)
+    screen.scaling = new BABYLON.Vector3(1, 1, 1)
     // screen.scaling = new BABYLON.Vector3(2, 2, 2)
     if (type == "front") {
         screen.position.y = 80
@@ -329,7 +329,7 @@ function addVideo(exp,aeroplane,radar,view) {
         screen.position.y = 80
         screen.position.x = 300
         // screen.position.z = 0
-        screen.position.z=50
+        screen.position.z=40
     }
     var mat = new BABYLON.StandardMaterial("mat", scene);
 
@@ -345,7 +345,7 @@ function addVideo(exp,aeroplane,radar,view) {
     return screen
 }
 
-function addPicture(exp,aeroplane,radar,view) {
+function addPicture(exp,aeroplane,radar,view,x=300,y=80,z=40) {
     let url=getPictureUrl(exp,aeroplane,radar,view)
     let type="side"
     let scaling=3
@@ -354,17 +354,21 @@ function addPicture(exp,aeroplane,radar,view) {
         width: 160 / scaling
     }, scene)
     screen.billboardMode = 7
-    screen.scaling = new BABYLON.Vector3(2, 2, 2)
+    screen.scaling = new BABYLON.Vector3(1, 1, 1)
     if (type == "front") {
         screen.position.y = 80
         screen.position.x = 50
         screen.position.z = -300
         // screen.rotation.x=0.5
     } else if (type == "side") {
-        screen.position.y = 80
-        screen.position.x = 300
+        // screen.position.y = 80
+        // screen.position.x = 300
+        // // screen.position.z = 0
+        // screen.position.z=50
+        screen.position.y = y
+        screen.position.x = x
         // screen.position.z = 0
-        screen.position.z=50
+        screen.position.z=z
     }
     var mat = new BABYLON.StandardMaterial("mat", scene);
     mat.diffuseTexture = new BABYLON.Texture(url, scene);
