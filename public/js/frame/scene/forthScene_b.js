@@ -107,7 +107,7 @@ function addRCSPanel_b(scene_t,aeroplane) {
                 }
                 setTimeout(()=>{
                     video=addPicture("exp_4",aeroplane,radar,type)
-                    video_2=addPicture("exp_5",aeroplane,radar,type,x=300,y=80,z=-40)
+                    video_2=addPicture("exp_5",aeroplane,radar,type,x=300,y=80,z=-20)
                 },12000)
             })
         }else{

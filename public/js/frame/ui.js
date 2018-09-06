@@ -345,7 +345,7 @@ function addVideo(exp,aeroplane,radar,view) {
     return screen
 }
 
-function addPicture(exp,aeroplane,radar,view,x=300,y=80,z=40) {
+function addPicture(exp,aeroplane,radar,view,x=300,y=80,z=20) {
     let url=getPictureUrl(exp,aeroplane,radar,view)
     let type="side"
     let scaling=3
@@ -354,7 +354,7 @@ function addPicture(exp,aeroplane,radar,view,x=300,y=80,z=40) {
         width: 160 / scaling
     }, scene)
     screen.billboardMode = 7
-    screen.scaling = new BABYLON.Vector3(1, 1, 1)
+    screen.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5)
     if (type == "front") {
         screen.position.y = 80
         screen.position.x = 50
