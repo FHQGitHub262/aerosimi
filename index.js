@@ -8,7 +8,6 @@ const apiRouter = require("./route/api")
 const viewRouter = require("./route/view")
 
 const app = express();
-// const session = require('express-session');
 
 app.use("/", viewRouter)
 app.use("/api", apiRouter)
