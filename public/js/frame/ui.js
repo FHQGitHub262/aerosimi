@@ -68,7 +68,7 @@ function addBackButton(title) {
     lab.paddingLeft = "260px";
     lab.top = "-10px";
     lab.lineSpacing="2px"
-    advancedTexture.addControl(lab)
+    // advancedTexture.addControl(lab)
 
 }
 function Button(text,onButtonClick=()=>{
