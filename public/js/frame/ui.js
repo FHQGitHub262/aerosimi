@@ -50,32 +50,33 @@ function addBackButton(title) {
     advancedTexture.addControl(header)
 
     let logo = new BABYLON.GUI.Image("logo", "textures/logo.png");
-    logo.stretch=BABYLON.GUI.Image.STRETCH_NONE
-    logo.verticalAlignment=BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM
-    logo.horizontalAlignment=BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
+    logo.stretch = BABYLON.GUI.Image.STRETCH_NONE
+    logo.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM
+    logo.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT
     logo.height = "60px";
-    logo.width="240px"
-    advancedTexture.addControl(logo);    
+    logo.width = "240px"
+    advancedTexture.addControl(logo);
 
-    let lab=new BABYLON.GUI.TextBlock()
-    lab.text="电工电子国家级实验教学示范中心\n电子信息技术国家级虚拟仿真实验教学中心"
-    lab.fontFamily="sans serf"
+    let lab = new BABYLON.GUI.TextBlock()
+    lab.text = "电工电子国家级实验教学示范中心\n电子信息技术国家级虚拟仿真实验教学中心"
+    lab.fontFamily = "sans serf"
     // lab.fontColor = new BABYLON.Color3(42/255,104/255,222/255);
-    lab.color="darkblue"
+    lab.color = "darkblue"
     lab.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-    lab.textVerticalAlignment=transformVertical("bottom")
+    lab.textVerticalAlignment = transformVertical("bottom")
     lab.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     lab.paddingLeft = "260px";
     lab.top = "-10px";
-    lab.lineSpacing="2px"
+    lab.lineSpacing = "2px"
     // advancedTexture.addControl(lab)
 
 }
-function Button(text,onButtonClick=()=>{
+
+function Button(text, onButtonClick = () => {
     console.log("click")
-},onButtonHover=()=>{
+}, onButtonHover = () => {
     console.log("hover")
-},height="100px",width=1,color="white",background="orange",fontSize=50){
+}, height = "100px", width = 1, color = "white", background = "orange", fontSize = 50) {
     let button = BABYLON.GUI.Button.CreateSimpleButton(text, text);
     button.width = width;
     button.height = height
@@ -87,11 +88,11 @@ function Button(text,onButtonClick=()=>{
     return button
 }
 
-function Button_s(text,onButtonClick=()=>{
+function Button_s(text, onButtonClick = () => {
     console.log("click")
-},onButtonHover=()=>{
+}, onButtonHover = () => {
     console.log("hover")
-},height="100px",width=1,color="white",background="orange",fontSize=50,){
+}, height = "100px", width = 1, color = "white", background = "orange", fontSize = 50, ) {
     let button = BABYLON.GUI.Button.CreateSimpleButton(text, text);
     button.width = "200px";
     button.height = "40px"
@@ -103,7 +104,7 @@ function Button_s(text,onButtonClick=()=>{
     return button
 }
 
-function TextBlock(text,fontSize=70,height="150px"){
+function TextBlock(text, fontSize = 70, height = "150px") {
     var textblock = new BABYLON.GUI.TextBlock();
     textblock.height = height;
     textblock.fontSize = fontSize;
@@ -113,7 +114,7 @@ function TextBlock(text,fontSize=70,height="150px"){
     return textblock
 }
 
-function RatioButton(size="40px"){
+function RatioButton(size = "40px") {
     let button = new BABYLON.GUI.RadioButton();
     button.width = size;
     button.height = size;
@@ -122,12 +123,12 @@ function RatioButton(size="40px"){
     return button
 }
 
-function Ratio(text,height="150px",width="400px",fontsize=40,size="40px",callback=(value)=>{
+function Ratio(text, height = "150px", width = "400px", fontsize = 40, size = "40px", callback = (value) => {
     console.log(value)
-}){
+}) {
     let button = RatioButton(size)
-    button.onIsCheckedChangedObservable.add((state)=>{
-        if(state){
+    button.onIsCheckedChangedObservable.add((state) => {
+        if (state) {
             callback(text)
         }
     })
@@ -138,26 +139,28 @@ function Ratio(text,height="150px",width="400px",fontsize=40,size="40px",callbac
     header.height = height;
     header.color = "black"
     header.alpha = 0.7
-    header.children[1].fontSize=36
-    header.children[1].onPointerMoveObservable.add(()=>{
-        header.children[1].fontSize=44
+    header.children[1].fontSize = 36
+    header.children[1].onPointerMoveObservable.add(() => {
+        header.children[1].fontSize = 44
+        header.children[1].color = "#2c6ef7"
     })
-    header.children[1].onPointerOutObservable.add(()=>{
-        header.children[1].fontSize=36        
+    header.children[1].onPointerOutObservable.add(() => {
+        header.children[1].fontSize = 36
+        header.children[1].color = ""
     })
     header.children[1].fontSize = fontsize;
-    header.children[1].onPointerDownObservable.add(()=>{
+    header.children[1].onPointerDownObservable.add(() => {
         button.isChecked = !button.isChecked;
     });
     return header
 }
 
-function Ratio_s(text,height="150px",width="400px",fontsize=40,size="40px",callback=(value)=>{
+function Ratio_s(text, height = "150px", width = "400px", fontsize = 40, size = "40px", callback = (value) => {
     console.log(value)
-}){
+}) {
     let button = RatioButton(size)
-    button.onIsCheckedChangedObservable.add((state)=>{
-        if(state){
+    button.onIsCheckedChangedObservable.add((state) => {
+        if (state) {
             callback(text)
         }
     })
@@ -168,152 +171,152 @@ function Ratio_s(text,height="150px",width="400px",fontsize=40,size="40px",callb
     header.height = height;
     header.color = "black"
     header.alpha = 0.7
-    header.children[1].fontSize=20
-    header.children[1].onPointerMoveObservable.add(()=>{
-        header.children[1].fontSize=24
+    header.children[1].fontSize = 20
+    header.children[1].onPointerMoveObservable.add(() => {
+        header.children[1].fontSize = 24
     })
-    header.children[1].onPointerOutObservable.add(()=>{
-        header.children[1].fontSize=20        
+    header.children[1].onPointerOutObservable.add(() => {
+        header.children[1].fontSize = 20
     })
     header.children[1].fontSize = fontsize;
-    header.children[1].onPointerDownObservable.add(()=>{
+    header.children[1].onPointerDownObservable.add(() => {
         button.isChecked = !button.isChecked;
     });
     return header
 }
 
 // button在上方
-function upFormitem(columns,title,onRatioClick=(value)=>{
+function upFormitem(columns, title, onRatioClick = (value) => {
     console.log(value)
-},onButtonClick=()=>{
+}, onButtonClick = () => {
     console.log("click")
-}){
+}) {
     let panel = new BABYLON.GUI.StackPanel();
     panel.top = "100px";
     panel.background = "white"
     panel.alpha = 0.8
-    
-    panel.addControl(Button(title,onButtonClick=onButtonClick))
 
-    columns.forEach((element)=>{
-        panel.addControl(Ratio(element,height="150px",width="450px",fontsize=40,size="40px",onRatioClick))
+    panel.addControl(Button(title, onButtonClick = onButtonClick))
+
+    columns.forEach((element) => {
+        panel.addControl(Ratio(element, height = "150px", width = "450px", fontsize = 40, size = "40px", onRatioClick))
     })
     return panel
 }
 
 // button在下方
-function downFormitem(columns,title,subtitle,onRatioClick=(value)=>{
+function downFormitem(columns, title, subtitle, onRatioClick = (value) => {
     console.log(value)
-},onButtonClick=()=>{
+}, onButtonClick = (value) => {
     console.log("click")
-}){
+}) {
     let panel = new BABYLON.GUI.StackPanel();
     panel.top = "100px";
     panel.background = "white"
     panel.alpha = 0.8
-    
-    let textblock=TextBlock(subtitle)
+
+    let textblock = TextBlock(subtitle)
     panel.addControl(textblock)
 
-    columns.forEach((element)=>{
-        panel.addControl(Ratio(element,height="150px",width="400px",fontsize=40,size="40px",(value)=>{
-            onRatioClick()
-            textblock.text=`已选择：${value}`
+    columns.forEach((element) => {
+        panel.addControl(Ratio(element, height = "150px", width = "400px", fontsize = 40, size = "40px", (value) => {
+            onRatioClick(value)
+            textblock.text = `已选择：${value}`
         }))
     })
 
-    panel.addControl(Button(title,onButtonClick=onButtonClick))
+    panel.addControl(Button(title, onButtonClick = onButtonClick))
     return panel
 }
 
-function downFormitem_s(columns,title,subtitle,left,top,horizontal,vertical,onRatioClick=(value)=>{
+function downFormitem_s(columns, title, subtitle, left, top, horizontal, vertical, onRatioClick = (value) => {
     console.log(value)
-},onButtonClick=(value)=>{
+}, onButtonClick = (value) => {
     console.log("click")
-}){
+}) {
     let panel = new BABYLON.GUI.StackPanel();
-    panel.width="150px"
-    panel.height="140px"
+    panel.width = "150px"
+    panel.height = "140px"
     panel.horizontalAlignment = transformHorizontal(horizontal);
     panel.verticalAlignment = transformVertical(vertical)
-    panel.background="white"
-    panel.alpha=0.8
-    panel.top=top
-    panel.left=left
-    
-    let textblock=TextBlock(subtitle,20,"30px")
+    panel.background = "white"
+    panel.alpha = 0.8
+    panel.top = top
+    panel.left = left
+
+    let textblock = TextBlock(subtitle, 20, "30px")
     panel.addControl(textblock)
 
-    columns.forEach((element)=>{
-        panel.addControl(Ratio_s(element,height="35px","100px",fontsize=15,size="15px",(value)=>{
+    columns.forEach((element) => {
+        panel.addControl(Ratio_s(element, height = "35px", "100px", fontsize = 15, size = "15px", (value) => {
             onRatioClick(value)
-            textblock.text=`已选择：${value}`
+            textblock.text = `已选择：${value}`
         }))
     })
 
-    panel.addControl(Button_s(title,onButtonClick=onButtonClick))
+    panel.addControl(Button_s(title, onButtonClick = onButtonClick))
     return panel
 }
 
 // 没有button
-function pureFormitem(columns,subtitle,left,top,horizontal,vertical,onRatioClick=(value)=>{
+function pureFormitem(columns, subtitle, left, top, horizontal, vertical, onRatioClick = (value) => {
     console.log(value)
-},onButtonClick=()=>{
+}, onButtonClick = () => {
     console.log("click")
-}){
+}) {
     let panel = new BABYLON.GUI.StackPanel();
-    panel.width="200px"
-    panel.height="200px"
+    panel.width = "200px"
+    panel.height = "200px"
     panel.horizontalAlignment = transformHorizontal(horizontal);
     panel.verticalAlignment = transformVertical(vertical)
-    panel.background="white"
-    panel.alpha=0.8
-    panel.top=top
-    panel.left=left
+    panel.background = "white"
+    panel.alpha = 0.8
+    panel.top = top
+    panel.left = left
 
-    let textblock=TextBlock(subtitle,25,"40px")
+    let textblock = TextBlock(subtitle, 25, "40px")
     panel.addControl(textblock)
 
-    columns.forEach((element)=>{
-        panel.addControl(Ratio_s(element,height="75px","100px",fontsize=20,size="20px",(value)=>{
+    columns.forEach((element) => {
+        panel.addControl(Ratio_s(element, height = "75px", "100px", fontsize = 20, size = "20px", (value) => {
             onRatioClick(value)
-            textblock.text=`已选择：${value}`
+            textblock.text = `已选择：${value}`
         }))
     })
     return panel
 }
 
 //角落里的pureformitem，极小
-function miniFormitem(columns,subtitle,left,top,horizontal,vertical,onRatioClick=(value)=>{
+function miniFormitem(columns, subtitle, left, top, horizontal, vertical, onRatioClick = (value) => {
     console.log(value)
-},onButtonClick=()=>{
+}, onButtonClick = () => {
     console.log("click")
-}){
+}) {
     let panel = new BABYLON.GUI.StackPanel();
-    panel.width="150px"
-    panel.height="100px"
+    panel.width = "150px"
+    panel.height = "100px"
     panel.horizontalAlignment = transformHorizontal(horizontal);
     panel.verticalAlignment = transformVertical(vertical)
-    panel.background="white"
-    panel.alpha=0.8
-    panel.top=top
-    panel.left=left
+    panel.background = "white"
+    panel.alpha = 0.8
+    panel.top = top
+    panel.left = left
 
-    let textblock=TextBlock(subtitle,20,"30px")
+    let textblock = TextBlock(subtitle, 20, "30px")
     panel.addControl(textblock)
 
-    columns.forEach((element)=>{
-        panel.addControl(Ratio_s(element,height="35px","100px",fontsize=15,size="15px",(value)=>{
+    columns.forEach((element) => {
+        panel.addControl(Ratio_s(element, height = "35px", "100px", fontsize = 15, size = "15px", (value) => {
             onRatioClick(value)
-            textblock.text=`已选择：${value}`
+            textblock.text = `已选择：${value}`
         }))
     })
     return panel
 }
 
-function addVideo(exp,aeroplane,radar,view) {
-    let url=getVideoUrl(exp,aeroplane,radar,view)
-    let type="side"
+function addVideo(exp, aeroplane, radar, view) {
+    let url = getVideoUrl(exp, aeroplane, radar, view)
+    let type = "side"
     var screen = BABYLON.MeshBuilder.CreatePlane("screen", {
         height: 90 / 3,
         width: 160 / 3
@@ -329,7 +332,7 @@ function addVideo(exp,aeroplane,radar,view) {
         screen.position.y = 80
         screen.position.x = 300
         // screen.position.z = 0
-        screen.position.z=40
+        screen.position.z = 40
     }
     var mat = new BABYLON.StandardMaterial("mat", scene);
 
@@ -345,10 +348,10 @@ function addVideo(exp,aeroplane,radar,view) {
     return screen
 }
 
-function addPicture(exp,aeroplane,radar,view,x=300,y=80,z=20) {
-    let url=getPictureUrl(exp,aeroplane,radar,view)
-    let type="side"
-    let scaling=3
+function addPicture(exp, aeroplane, radar, view, x = 300, y = 80, z = 20) {
+    let url = getPictureUrl(exp, aeroplane, radar, view)
+    let type = "side"
+    let scaling = 2.25
     var screen = BABYLON.MeshBuilder.CreatePlane("screen", {
         height: 90 / scaling,
         width: 160 / scaling
@@ -359,16 +362,11 @@ function addPicture(exp,aeroplane,radar,view,x=300,y=80,z=20) {
         screen.position.y = 80
         screen.position.x = 50
         screen.position.z = -300
-        // screen.rotation.x=0.5
+
     } else if (type == "side") {
-        // screen.position.y = 80
-        // screen.position.x = 300
-        // // screen.position.z = 0
-        // screen.position.z=50
         screen.position.y = y
         screen.position.x = x
-        // screen.position.z = 0
-        screen.position.z=z
+        screen.position.z = z
     }
     var mat = new BABYLON.StandardMaterial("mat", scene);
     mat.diffuseTexture = new BABYLON.Texture(url, scene);
@@ -376,4 +374,3 @@ function addPicture(exp,aeroplane,radar,view,x=300,y=80,z=20) {
     addCloseButton(screen)
     return screen
 }
-

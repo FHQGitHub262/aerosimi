@@ -1,14 +1,14 @@
 var firstScene = function () {
     var scene = new BABYLON.Scene(engine);
 
-    video=""
-    type="side"
+    video = ""
+    type = "side"
 
     var assetsManager = new BABYLON.AssetsManager(scene);
     assetsManager.onTaskError = function (task) {
         console.log("error while loading " + task.name);
     }
-    addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
+    addRadar(assetsManager, new BABYLON.Vector3(260, -10, -100))
     engine.loadingUIBackgroundColor = "Black";
     assetsManager.load();
 
@@ -24,18 +24,18 @@ var firstScene = function () {
         camera.attachControl(canvas, true);
     }
 
-    var vrHelper = vr(scene,ground)
+    var vrHelper = vr(scene, ground)
     return scene;
 };
 
-function addRadarPanel(){
+function addRadarPanel() {
     let columns = [
         "433MHz",
         "2.4GHz"
     ]
-    let wave=""
-    
-    let 
+    let wave = ""
+
+    let
 }
 
 function addRadarPanel() {
@@ -44,29 +44,29 @@ function addRadarPanel() {
         "433MHz",
         "2.4GHz"
     ]
-    let wave=""
+    let wave = ""
 
     var plane_r = BABYLON.Mesh.CreatePlane("plane", 40);
     plane_r.position.x = 290;
     plane_r.position.y = 100
     plane_r.position.z = 60
-    plane_r.billboardMode=2
+    plane_r.billboardMode = 2
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane_r);
 
-    let panel=downFormitem(columns,title="开始实验",subtitle="设定雷达参数",onRatioClick=(value)=>{
-        if(value==columns[0])
-            frequency="433MHz"
+    let panel = downFormitem(columns, title = "开始实验", subtitle = "设定雷达参数", onRatioClick = (value) => {
+        console.log(value)
+        if (value == columns[0])
+            frequency = "433MHz"
         else
-            frequency=0.7    
-    },onButtonClick=()=>{
-        if(frequency=="433MHz")
-            wave=createRadarSphere(scene,2,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
+            frequency = 0.7
+    }, onButtonClick = () => {
+        if (frequency == "433MHz")
+            wave = createRadarSphere(scene, 0.7, new BABYLON.Vector3(257, 15, -98), new BABYLON.Vector3(Math.PI * 0.3, Math.PI * 0.69, Math.PI * 0))
         else
-            wave=createRadarSphere(scene,0.6,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
-        setTimeout(()=>{
+            wave = createRadarSphere(scene, 0.2, new BABYLON.Vector3(257, 15, -98), new BABYLON.Vector3(Math.PI * 0.3, Math.PI * 0.69, Math.PI * 0))
+        setTimeout(() => {
             clearInterval(wave)
-        },10000)
+        }, 7500)
     })
     advancedTexture.addControl(panel)
 }
-

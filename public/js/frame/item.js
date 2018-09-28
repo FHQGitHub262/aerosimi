@@ -61,13 +61,19 @@ function createBackSphere(scene, position, towards = new BABYLON.Vector3(257, 15
     let material_sphere = new BABYLON.StandardMaterial('spheremat', scene);
     material_sphere.diffuseColor = new BABYLON.Color3(0.2, 0.3, 0.6);
     material_sphere.diffuseColor.hasAlpha = true;
-    material_sphere.alpha = 0.5
+    material_sphere.alpha = 0.3
 
-    let hoop = BABYLON.MeshBuilder.CreateTorus("hoop", {
-        thickness: 0.1,
-        tessellation: 32
+    let hoop = BABYLON.MeshBuilder.CreateSphere("plane", {
+        arc: -0.1,
+        sideOrientation: BABYLON.Mesh.DOUBLESIDE,
+        diameter: 10,
+        slice: 0.5,
     }, scene);
-    hoop.scaling = new BABYLON.Vector3(15, 15, 15)
+    // let hoop = BABYLON.MeshBuilder.CreateTorus("hoop", {
+    //     thickness: 0.1,
+    //     tessellation: 32
+    // }, scene);
+    hoop.scaling = new BABYLON.Vector3(1, 1, 1)
     // hoop.position=towards
     hoop.position = position
     hoop.material = material_sphere
@@ -79,16 +85,20 @@ function createBackSphere(scene, position, towards = new BABYLON.Vector3(257, 15
     let move = setInterval(() => {
         hoop.lookAt(towards)
         hoop.rotation.x -= Math.PI * 0.5
-        hoop.movePOV(0, 5, 0)
+        hoop.movePOV(0, 30, 0)
         hoop.scaling.z += 0.25
         hoop.scaling.x += 0.25
 
-        if(hoop.position.y<=towards.y+50)
+        if (hoop.position.y <= towards.y + 50) {
+            clearInterval(move)
             hoop.dispose()
-    }, 1)
+        }
+    }, 100)
 }
 
 function createRadarSphere(scene, frequence, position, rotation) {
+    let delay = frequence * 1000
+    console.log(frequence)
     return setInterval(() => {
         let material_sphere = new BABYLON.StandardMaterial('spheremat', scene);
         material_sphere.diffuseColor = BABYLON.Color3.Gray();
@@ -98,18 +108,57 @@ function createRadarSphere(scene, frequence, position, rotation) {
         let plane = BABYLON.MeshBuilder.CreateSphere("plane", {
             arc: 0.5,
             sideOrientation: BABYLON.Mesh.DOUBLESIDE,
-            diameter: 10
+            diameter: 10,
+            slice: 1,
         }, scene);
         plane.material = material_sphere;
         plane.rotation = rotation
         plane.position = position
-        let scale = setInterval(() => {
-            plane.scaling = new BABYLON.Vector3(plane.scaling.x + 0.05, plane.scaling.x + 0.05, plane.scaling.x + 0.05)
-            material_sphere.alpha -= 0.0005
-        }, 1)
-        setTimeout(() => {
-            clearInterval(scale)
+
+        let keys = []
+        keys.push({
+            frame: 0,
+            value: 1
+        })
+        keys.push({
+            frame: 600,
+            value: 150
+        })
+
+        let keys_alpha = []
+        keys_alpha.push({
+            frame: 0,
+            value: 0.3
+        })
+        keys_alpha.push({
+            frame: 180,
+            value: 0
+        })
+        var animationX = new BABYLON.Animation("tutoAnimation", "scaling.x", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+            BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+        var animationY = new BABYLON.Animation("tutoAnimation", "scaling.y", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+            BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+        var animationZ = new BABYLON.Animation("tutoAnimation", "scaling.z", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+            BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+        var sphereAlpha = new BABYLON.Animation("tutoAnimation", "material.alpha", 60, BABYLON.Animation.ANIMATIONTYPE_FLOAT,
+            BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+        sphereAlpha.setKeys(keys_alpha)
+        animationX.setKeys(keys);
+        animationY.setKeys(keys);
+        animationZ.setKeys(keys);
+
+        plane.animations.push(animationX);
+        plane.animations.push(animationY);
+        plane.animations.push(animationZ);
+        plane.animations.push(sphereAlpha);
+        // console.log(plane)
+
+        setTimeout(async () => {
+            let anim = scene.beginAnimation(plane, 0, 180, false);
+            // console.log("before");
+            await anim.waitAsync();
+            // console.log("after");
             plane.dispose()
-        }, 5000)
-    }, 500 * frequence)
+        });
+    }, delay)
 }
