@@ -1,16 +1,16 @@
-var forthScene_b = function (aeroplane="F117") {
+var forthScene_b = function (aeroplane = "F117") {
     var scene = new BABYLON.Scene(engine);
 
-    type="side"
-    video=""
+    type = "side"
+    video = ""
 
     var light = setLight(scene)
     frontCamera = frontCam(scene)
-    sideCamera=sideCam(scene)
-    scene.activeCamera=sideCamera
+    sideCamera = sideCam(scene)
+    scene.activeCamera = sideCamera
     var ground = frameGround(scene)
-    var two_panel = addRCSPanel_b(scene,aeroplane)
-    var vrHelper=vr(scene,ground)
+    var two_panel = addRCSPanel_b(scene, aeroplane)
+    var vrHelper = vr(scene, ground)
     var tri_panel = addBackButton("RCS雷达散射截面测量")
 
     var assetsManager = new BABYLON.AssetsManager(scene);
@@ -22,13 +22,13 @@ var forthScene_b = function (aeroplane="F117") {
             scene.render();
         });
     };
-    if(aeroplane=="F117"){
-        addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
+    if (aeroplane == "F117") {
+        addRadar(assetsManager, new BABYLON.Vector3(260, -10, -100))
         // addRadar(assetsManager,new BABYLON.Vector3(260,-10,100),0.3)
         addF117(assetsManager)
         assetsManager.load();
-    }else{
-        addRadar(assetsManager,new BABYLON.Vector3(260,-10,-100))
+    } else {
+        addRadar(assetsManager, new BABYLON.Vector3(260, -10, -100))
         // addRadar(assetsManager,new BABYLON.Vector3(260,-10,100),0.3)
         addA380(assetsManager)
         assetsManager.load();
@@ -37,8 +37,8 @@ var forthScene_b = function (aeroplane="F117") {
 };
 
 // -----------------------------------------
-function addRCSPanel_b(scene_t,aeroplane) {
-    wave=""
+function addRCSPanel_b(scene_t, aeroplane) {
+    wave = ""
 
     let columns = [
         "F117",
@@ -48,158 +48,158 @@ function addRCSPanel_b(scene_t,aeroplane) {
         "正视图",
         "侧视图"
     ]
-    let columns_radar=[
+    let columns_radar = [
         "433MHz",
         "2.4GHz"
     ]
-    let columns_l2=[
+    let columns_l2 = [
         "单雷达",
         "双雷达"
     ]
     // aero_type
     var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_r");
-    let panel=miniFormitem(columns,"飞行器类型",30,60,"left","top",onRatioClick=(aero)=>{
-        if(aero=="F117"){
+    let panel = miniFormitem(columns, "飞行器类型", 30, 60, "left", "top", onRatioClick = (aero) => {
+        if (aero == "F117") {
             scene.dispose()
-            scene=forthScene_b("F117")
-        }else{
+            scene = forthScene_b("F117")
+        } else {
             scene.dispose()
-            scene=forthScene_b("A380")
+            scene = forthScene_b("A380")
         }
     })
     advancedTexture.addControl(panel);
 
     // radar_type
     var advancedTexture_l = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_l");
-    let panel_l=downFormitem_s(columns_radar,"开始实验","雷达类型",30,300,"left","top",onRatioClick=(frequency)=>{
-        if(frequency=="433MHz"){
-            if(wave!=""){
+    let panel_l = downFormitem_s(columns_radar, "开始实验", "雷达类型", 30, 300, "left", "top", onRatioClick = (frequency) => {
+        if (frequency == "433MHz") {
+            if (wave != "") {
                 // clearInterval(wave)
                 // wave=createRadarSphere(scene,2,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
-                radar="433MHz"
-            }else{
+                radar = "433MHz"
+            } else {
                 // wave=createRadarSphere(scene,2,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
-                radar="433MHz"
+                radar = "433MHz"
             }
             // setTimeout(()=>{
             //     clearInterval(wave)
             //     wave=""
             // },5000)
-        }else if(frequency=="2.4GHz"){
-            if(wave!=""){
+        } else if (frequency == "2.4GHz") {
+            if (wave != "") {
                 // clearInterval(wave)
                 // wave=createRadarSphere(scene,0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
-                radar="2.4GHz"
-            }else{
+                radar = "2.4GHz"
+            } else {
                 // wave=createRadarSphere(scene,0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
-                radar="2.4GHz"
+                radar = "2.4GHz"
             }
             // setTimeout(()=>{
             //     clearInterval(wave)
             //     wave=""
             // },5000)
         }
-    },onButtonClick=()=>{
-        if(aeroplane!=""&&radar!=""&&type!=""){
-            scene.meshes.forEach((element)=>{
-                if(element.state=="f117"||element.state=="a380"){
-                    aerofly_b(element,radar)
+    }, onButtonClick = () => {
+        if (aeroplane != "" && radar != "" && type != "") {
+            scene.meshes.forEach((element) => {
+                if (element.state == "f117" || element.state == "a380") {
+                    aerofly_b(element, radar)
                 }
-                setTimeout(()=>{
-                    video=addPicture("exp_4",aeroplane,radar,type)
-                    video_2=addPicture("exp_5",aeroplane,radar,type,x=300,y=80,z=-20)
-                },12000)
+                setTimeout(() => {
+                    video = addPicture("exp_4", aeroplane, radar, type)
+                    video_2 = addPicture("exp_5", aeroplane, radar, type, x = 300, y = 40, z = 40)
+                }, 12000)
             })
-        }else{
-            console.log(aeroplane,wave,type)
+        } else {
+            console.log(aeroplane, wave, type)
             alert("请填写完所有参数")
         }
     })
     advancedTexture_l.addControl(panel_l)
 
     // view_type
-    let panel_r2=miniFormitem(columns_l,"选择角度",30,180,"left","top",onRatioClick=(towards)=>{
-        if(towards=="正视图"){
-            type="front"
-            scene.meshes.forEach((element)=>{
-                if(element.state=="f117"||element.state=="a380"){
+    let panel_r2 = miniFormitem(columns_l, "选择角度", 30, 180, "left", "top", onRatioClick = (towards) => {
+        if (towards == "正视图") {
+            type = "front"
+            scene.meshes.forEach((element) => {
+                if (element.state == "f117" || element.state == "a380") {
                     console.log(element.position)
-                    if(element.position.z!=0){
-                        element.position=new BABYLON.Vector3(-300,element.position.y,0)
-                        element.rotation.y-=0.5*Math.PI    
+                    if (element.position.z != 0) {
+                        element.position = new BABYLON.Vector3(-300, element.position.y, 0)
+                        element.rotation.y -= 0.5 * Math.PI
                     }
                 }
             })
-        }else{
-            scene.meshes.forEach((element)=>{
-                type="side"
-                if(element.state=="f117"||element.state=="a380"){
+        } else {
+            scene.meshes.forEach((element) => {
+                type = "side"
+                if (element.state == "f117" || element.state == "a380") {
                     console.log(element.position)
-                    if(element.position.x!=0){
-                        element.position=new BABYLON.Vector3(0,element.position.y,300)
-                        element.rotation.y+=0.5*Math.PI    
+                    if (element.position.x != 0) {
+                        element.position = new BABYLON.Vector3(0, element.position.y, 300)
+                        element.rotation.y += 0.5 * Math.PI
                     }
                 }
             })
         }
-        if(video!=""){
+        if (video != "") {
             video.dispose()
-            video="" 
+            video = ""
         }
     })
     advancedTexture.addControl(panel_r2);
     // ----------------单双雷达--------------------
     let advancedTexture_l2 = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("model");
 
-    let panel_l2=miniFormitem(columns_l2,"选择模式",-30,10,"right","top",onRatioClick=(value)=>{
-        if(value=="单雷达"){
+    let panel_l2 = miniFormitem(columns_l2, "选择模式", -30, 10, "right", "top", onRatioClick = (value) => {
+        if (value == "单雷达") {
             scene.dispose()
-            scene=forthScene_b(aeroplane)
-        }else{
+            scene = forthScene_b(aeroplane)
+        } else {
             scene.dispose()
-            scene=forthScene_d(aeroplane)
-        }        
+            scene = forthScene_d(aeroplane)
+        }
     })
     advancedTexture_l2.addControl(panel_l2)
 }
 
-function aerofly_b(aeroplane,frequency){
+function aerofly_b(aeroplane, frequency) {
     let temp_pos
-    let radar=getMeshByState("radar")
-    radar=radar.position
-    let wave=createRadarSphere(scene,frequency=="433MHz"?2:0.7,new BABYLON.Vector3(257,15,-98),new BABYLON.Vector3(Math.PI*0.3,Math.PI*0.69,Math.PI*0))
-    if(aeroplane.position.z==0&&aeroplane.position.x<600){
-        let back=0
-        setTimeout(()=>{
-                back=setInterval(()=>{
-                temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
-                createBackSphere(scene,temp_pos,radar)
-            },200)
-        },500)
-        let move=setInterval(()=>{
-            aeroplane.position.x+=0.5
-            if(aeroplane.position.x>=600){
+    let radar = getMeshByState("radar")
+    radar = radar.position
+    let wave = createRadarSphere(scene, frequency == "433MHz" ? 2 : 0.7, new BABYLON.Vector3(257, 15, -98), new BABYLON.Vector3(Math.PI * 0.3, Math.PI * 0.69, Math.PI * 0))
+    if (aeroplane.position.z == 0 && aeroplane.position.x < 600) {
+        let back = 0
+        setTimeout(() => {
+            back = setInterval(() => {
+                temp_pos = new BABYLON.Vector3(aeroplane.position.x, aeroplane.position.y, aeroplane.position.z)
+                createBackSphere(scene, temp_pos, radar)
+            }, 200)
+        }, 500)
+        let move = setInterval(() => {
+            aeroplane.position.x += 0.5
+            if (aeroplane.position.x >= 600) {
                 clearInterval(move)
                 clearInterval(back)
                 clearInterval(wave)
             }
-        },1)
-    }else if(aeroplane.position.x==0&&aeroplane.position.z>-600){
-        let back=0
-        setTimeout(()=>{
-                back=setInterval(()=>{
-                temp_pos=new BABYLON.Vector3(aeroplane.position.x,aeroplane.position.y,aeroplane.position.z)
-                createBackSphere(scene,temp_pos,radar)
-            },200)
-        },500)
-        let move=setInterval(()=>{
-            aeroplane.position.z-=0.5
-            if(aeroplane.position.z<=-600){
+        }, 1)
+    } else if (aeroplane.position.x == 0 && aeroplane.position.z > -600) {
+        let back = 0
+        setTimeout(() => {
+            back = setInterval(() => {
+                temp_pos = new BABYLON.Vector3(aeroplane.position.x, aeroplane.position.y, aeroplane.position.z)
+                createBackSphere(scene, temp_pos, radar)
+            }, 200)
+        }, 500)
+        let move = setInterval(() => {
+            aeroplane.position.z -= 0.5
+            if (aeroplane.position.z <= -600) {
                 clearInterval(move)
                 clearInterval(back)
                 clearInterval(wave)
             }
-        },1)
+        }, 1)
     }
     // const radar=getMeshByState("radar").position
     // if(aeroplane.position.z==0&&aeroplane.position.x<600){
