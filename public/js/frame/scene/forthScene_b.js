@@ -173,7 +173,9 @@ function aerofly_b(aeroplane, frequency) {
         setTimeout(() => {
             back = setInterval(() => {
                 temp_pos = new BABYLON.Vector3(aeroplane.position.x, aeroplane.position.y, aeroplane.position.z)
-                createBackSphere(scene, temp_pos, radar)
+                setTimeout(()=>{
+                    createBackSphere(scene, temp_pos, radar)
+                },1500)
             }, 200)
         }, 500)
         let move = setInterval(() => {
@@ -189,7 +191,9 @@ function aerofly_b(aeroplane, frequency) {
         setTimeout(() => {
             back = setInterval(() => {
                 temp_pos = new BABYLON.Vector3(aeroplane.position.x, aeroplane.position.y, aeroplane.position.z)
-                createBackSphere(scene, temp_pos, radar)
+                setTimeout(()=>{
+                    createBackSphere(scene, temp_pos, radar)
+                },1500)
             }, 200)
         }, 500)
         let move = setInterval(() => {
