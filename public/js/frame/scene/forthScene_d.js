@@ -42,7 +42,7 @@ function addRCSPanel_d(scene_t, aeroplane) {
 
     let columns = [
         "F117",
-        "A380"
+        "A320"
     ]
     let columns_l = [
         "正视图",
@@ -71,7 +71,7 @@ function addRCSPanel_d(scene_t, aeroplane) {
 
     // radar_type
     var advancedTexture_l = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_l");
-    let panel_l = downFormitem_s(columns_radar, "开始实验", "雷达类型", 30, 300, "left", "top", onRatioClick = (frequency) => {
+    let panel_l = downFormitem_s(columns_radar, "开始实验", "雷达类型", 30, 420, "left", "top", onRatioClick = (frequency) => {
         if (frequency == "433MHz") {
             if (wave != "") {
                 // clearInterval(wave)
@@ -107,7 +107,7 @@ function addRCSPanel_d(scene_t, aeroplane) {
                 }
                 setTimeout(() => {
                     video = addPicture("exp_4", aeroplane, radar, type)
-                    video_2 = addPicture("exp_5", aeroplane, radar, type, x = 300, y = 40, z = 40)
+                    video_2 = addPicture("exp_5", aeroplane, radar, type, x = 300, y = 80, z = -20)
                 }, 12000)
             })
         } else {
@@ -118,7 +118,7 @@ function addRCSPanel_d(scene_t, aeroplane) {
     advancedTexture_l.addControl(panel_l)
 
     // view_type
-    let panel_r2 = miniFormitem(columns_l, "选择角度", 30, 180, "left", "top", onRatioClick = (towards) => {
+    let panel_r2 = miniFormitem(columns_l, "选择角度", 30, 300, "left", "top", onRatioClick = (towards) => {
         if (towards == "正视图") {
             type = "front"
             scene.meshes.forEach((element) => {
@@ -151,7 +151,7 @@ function addRCSPanel_d(scene_t, aeroplane) {
     // ----------------单双雷达--------------------
     let advancedTexture_l2 = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("model");
 
-    let panel_l2 = miniFormitem(columns_l2, "选择模式", -30, 10, "right", "top", onRatioClick = (value) => {
+    let panel_l2 = miniFormitem(columns_l2, "选择模式", 30, 180, "left", "top", onRatioClick = (value) => {
         if (value == "单雷达") {
             scene.dispose()
             scene = forthScene_b(aeroplane)

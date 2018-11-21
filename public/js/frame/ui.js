@@ -60,15 +60,28 @@ function addBackButton(title) {
     let lab = new BABYLON.GUI.TextBlock()
     lab.text = "电工电子国家级实验教学示范中心\n电子信息技术国家级虚拟仿真实验教学中心"
     lab.fontFamily = "sans serf"
-    // lab.fontColor = new BABYLON.Color3(42/255,104/255,222/255);
-    lab.color = "darkblue"
+    lab.color = "#223680";
+    // lab.color = "darkblue"
     lab.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     lab.textVerticalAlignment = transformVertical("bottom")
     lab.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
     lab.paddingLeft = "260px";
     lab.top = "-10px";
     lab.lineSpacing = "2px"
-    // advancedTexture.addControl(lab)
+    advancedTexture.addControl(lab)
+
+    let lab2 = new BABYLON.GUI.TextBlock()
+    lab2.text = "建议使用GTX550、Vega4及以上性能显卡运行本应用"
+    lab2.fontFamily = "sans serf"
+    lab2.color = "#aaaaaa";
+    // lab.color = "darkblue"
+    lab2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    lab2.textVerticalAlignment = transformVertical("top")
+    lab2.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    lab2.paddingRight = "10px";
+    lab2.top = "10px";
+    lab2.lineSpacing = "2px"
+    advancedTexture.addControl(lab2)
 
 }
 

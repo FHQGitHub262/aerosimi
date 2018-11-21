@@ -42,7 +42,7 @@ function addRCSPanel_b(scene_t,aeroplane) {
 
     let columns = [
         "F117",
-        "A380"
+        "A320"
     ]
     let columns_l = [
         "正视图",

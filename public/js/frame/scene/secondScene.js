@@ -41,7 +41,7 @@ function addFrequencePanel(scene_t, aeroplane) {
     radar = ""
     let columns = [
         "F117",
-        "A380"
+        "A320"
     ]
     var columns_l = [
         "正视图",
@@ -50,6 +50,11 @@ function addFrequencePanel(scene_t, aeroplane) {
     var columns_radar = [
         "433MHz",
         "2.4GHz"
+    ]
+
+    let columns_power=[
+        "0dBm",
+        "10dBm"
     ]
 
     // aero_type
@@ -65,9 +70,12 @@ function addFrequencePanel(scene_t, aeroplane) {
     })
     advancedTexture.addControl(panel);
 
+    var advancedTexture_rr = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_rr");
+    let panel_rr = miniFormitem(columns_power, "入射功率", 30, 300, "left", "top")
+    advancedTexture_rr.addControl(panel_rr);
     // radar_type
     var advancedTexture_l = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("plane_l");
-    let panel_l = downFormitem_s(columns_radar, "开始实验", "雷达类型", 30, 300, "left", "top", onRatioClick = (frequency) => {
+    let panel_l = downFormitem_s(columns_radar, "开始实验", "雷达类型", 30, 420, "left", "top", onRatioClick = (frequency) => {
         if (frequency == "433MHz") {
             if (wave != "") {
                 // clearInterval(wave)

@@ -41,7 +41,7 @@ function addFrequencePanel(scene_t,aeroplane) {
 
     let columns = [
         "F117",
-        "A380"
+        "A320"
     ]
     var columns_l = [
         "正视图",
